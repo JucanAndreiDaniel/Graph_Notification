@@ -1,2 +1,2 @@
 # Preview
-[Home Preview](https://imgur.com/OIP1K57)
+[Home Preview](https://i.imgur.com/OIP1K57.png)
