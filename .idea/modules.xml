@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SCFNotification_Mockup.iml" filepath="$PROJECT_DIR$/.idea/modules/SCFNotification_Mockup.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SCFNotification_Mockup.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SCFNotification_Mockup.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SCFNotification.iml" filepath="$PROJECT_DIR$/.idea/modules/SCFNotification.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SCFNotification.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SCFNotification.app.iml" />
     </modules>
   </component>
 </project>
