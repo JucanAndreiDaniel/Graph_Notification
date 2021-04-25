@@ -1,6 +1,7 @@
 package com.example.scfnotification
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
