@@ -4,6 +4,7 @@
     <!-- Color of disabled elements, always overlaying the background color or itself -->
     <attr name="colorDisable" format="color"/>
 
+
     <style name="ActivityLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorBackground">@color/light_orange</item>
         <item name="colorDisable">@color/black_transparent</item>

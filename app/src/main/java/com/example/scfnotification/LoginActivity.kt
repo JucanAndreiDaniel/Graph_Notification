@@ -80,7 +80,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun onLoginSuccess() {
-        _loginButton!!.isEnabled = true
         startActivity(Intent(this, MainActivity::class.java))
     }
 

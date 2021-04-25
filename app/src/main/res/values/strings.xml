@@ -23,6 +23,7 @@
     <string name="Theres_no_active_network_connection">There\'s no active network connection</string>
     <string name="Username">Username</string>
     <string name="Mismatch">Mismatch</string>
+    <string name="no_results">No Results</string>
 
     <string-array name="countries_array">
         <item>Afghanistan</item>
