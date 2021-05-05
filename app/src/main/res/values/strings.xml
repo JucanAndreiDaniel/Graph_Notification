@@ -24,6 +24,7 @@
     <string name="Username">Username</string>
     <string name="Mismatch">Mismatch</string>
     <string name="no_results">No Results</string>
+    <string name="settings">Settings</string>
 
     <string-array name="countries_array">
         <item>Afghanistan</item>

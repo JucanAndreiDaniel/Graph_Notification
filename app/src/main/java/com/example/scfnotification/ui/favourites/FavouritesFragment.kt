@@ -21,8 +21,8 @@ class FavouritesFragment : Fragment() {
     ): View? {
         favouritesViewModel =
                 ViewModelProvider(this).get(FavouritesViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
+        val root = inflater.inflate(R.layout.fragment_favourites, container, false)
+        val textView: TextView = root.findViewById(R.id.text_favourites)
         favouritesViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
