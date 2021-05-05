@@ -280,5 +280,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_button">menu_button</string>
+    <string name="more">More</string>
 
 </resources>
