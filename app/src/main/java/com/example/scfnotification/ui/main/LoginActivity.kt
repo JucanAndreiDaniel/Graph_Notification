@@ -1,23 +1,19 @@
-package com.example.scfnotification
+package com.example.scfnotification.ui.main
 
-import android.accounts.NetworkErrorException
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.android.volley.NetworkError
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.scfnotification.R
 import org.json.JSONObject
-import kotlin.math.log
 
 
 class LoginActivity : AppCompatActivity() {
@@ -28,6 +24,10 @@ class LoginActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_login)
 
@@ -81,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun onLoginSuccess() {
         startActivity(Intent(this, MainActivity::class.java))
+        _loginButton!!.isEnabled = true
     }
 
     fun onLoginFailed() {
