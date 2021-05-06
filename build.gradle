@@ -1,4 +1,8 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+ext {
+    sqliteVersion = '3.0.0'
+    sqliteKtxVersion = '2.1.0'
+    sqliteAndroidVersion = '3.35.5'
+}// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.4.32"
     repositories {
@@ -16,8 +20,9 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenCentral()
         google()
-        jcenter()
+        maven { setUrl("https://www.jitpack.io") }
     }
 }
 
