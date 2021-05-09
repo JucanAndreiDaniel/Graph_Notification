@@ -21,27 +21,14 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
-        /**
-         * The only instance
-         */
-        private var sInstance: AppDatabase? = null
+        @Volatile private var INSTANCE: AppDatabase? = null
 
-        /**
-         * Gets the singleton instance of SampleDatabase.
-         *
-         * @param context The context.
-         * @return The singleton instance of SampleDatabase.
-         */
-        @Synchronized
-        fun getInstance(context: Context): AppDatabase {
-            if (sInstance == null) {
-                sInstance = Room
-                    .databaseBuilder(context.applicationContext, AppDatabase::class.java, "example")
-                    .fallbackToDestructiveMigration()
-                    .build()
-            }
-            return sInstance!!
-        }
+        fun getDatabase(context: Context): AppDatabase =
+            INSTANCE ?: synchronized(this) { INSTANCE ?: buildDatabase(context).also { INSTANCE = it } }
+
+        private fun buildDatabase(ctx: Context) =
+            Room.databaseBuilder(ctx.applicationContext, AppDatabase::class.java, "word_database")
+                .build()
     }
 
 }

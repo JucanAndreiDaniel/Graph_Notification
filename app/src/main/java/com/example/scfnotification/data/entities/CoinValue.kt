@@ -18,6 +18,7 @@ import java.sql.Timestamp
 class CoinValue constructor(coin_currency: String, coin: String, currency: String,current :Float,high_1d:Float, low_1d:Float, ath:Float, atl:Float ,ath_time: String, atl_time:String) {
 
     @PrimaryKey
+    @ColumnInfo(name = "coin_currency")
     var coin_currency: String = coin_currency
     @ColumnInfo(name = "coin")
     var coin: String = coin

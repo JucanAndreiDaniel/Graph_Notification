@@ -1,13 +1,27 @@
 package com.example.scfnotification.ui.favourites
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.scfnotification.data.entities.CryptoCoin
+import com.example.scfnotification.data.repositories.CryptoCoinRepository
+import kotlinx.coroutines.launch
 
-class FavouritesViewModel : ViewModel() {
+class FavouritesViewModel(private val repository: CryptoCoinRepository) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Here you will find your favourite stock/crypto currencies"
+    val allCryptocoins : LiveData<List<CryptoCoin>> by lazy { repository.allCryptocoins.asLiveData() }
+
+    fun insert(cryptoCoin: CryptoCoin) = viewModelScope.launch {
+        repository.insert(cryptoCoin)
     }
-    val text: LiveData<String> = _text
+}
+
+class FavoriteViewModelFactory(private val repository: CryptoCoinRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(FavouritesViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return FavouritesViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }

@@ -1,84 +1,54 @@
 package com.example.scfnotification.data.adapters
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.example.scfnotification.R
 import com.example.scfnotification.data.entities.CryptoCoin
 
-class CryptoCoinAdapter(private val mContext: Context, private val mData: MutableList<CryptoCoin>) : BaseAdapter(){
-    /**
-     * How many items are in the data set represented by this Adapter.
-     *
-     * @return Count of items.
-     */
-    override fun getCount(): Int {
-        return mData.size
+class CryptoCoinAdapter(ct: Context) : ListAdapter<CryptoCoin, CryptoCoinAdapter.CryptoCoinHolder>(CryptoCoinsComparator()) {
+
+    private var context: Context = ct
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CryptoCoinHolder {
+        val inflater: LayoutInflater = LayoutInflater.from(context)
+
+        return CryptoCoinHolder(inflater.inflate(R.layout.row_layout, parent, false))
     }
 
-    /**
-     * Get the data item associated with the specified position in the data set.
-     *
-     * @param position Position of the item whose data we want within the adapter's
-     * data set.
-     * @return The data at the specified position.
-     */
-    override fun getItem(position: Int): Any {
-        return mData[position]
+    override fun onBindViewHolder(holder: CryptoCoinHolder, position: Int) {
+        val current = getItem(position)
+        holder.bind(current.name)
     }
 
-    /**
-     * Get the row id associated with the specified position in the list.
-     *
-     * @param position The position of the item within the adapter's data set whose row id we want.
-     * @return The id of the item at the specified position.
-     */
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    class CryptoCoinHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val wordItemView: TextView = itemView.findViewById(R.id.textView)
 
-    /**
-     * Get a View that displays the data at the specified position in the data set. You can either
-     * create a View manually or inflate it from an XML layout file. When the View is inflated, the
-     * parent View (GridView, ListView...) will apply default layout parameters unless you use
-     * [android.view.LayoutInflater.inflate]
-     * to specify a root view and to prevent attachment to the root.
-     *
-     * @param position The position of the item within the adapter's data set of the item whose view
-     * we want.
-     * @param convertView The old view to reuse, if possible. Note: You should check that this view
-     * is non-null and of an appropriate type before using. If it is not possible to convert
-     * this view to display the correct data, this method can create a new view.
-     * Heterogeneous lists can specify their number of view types, so that this View is
-     * always of the right type (see [.getViewTypeCount] and
-     * [.getItemViewType]).
-     * @param parent The parent that this view will eventually be attached to
-     * @return A View corresponding to the data at the specified position.
-     */
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        TODO("""var view = convertView
-        val viewHolder: ViewHolder
-        if (view != null) {
-            viewHolder = view.tag as ViewHolder
-        } else {
-            view = LayoutInflater.from(mContext)
-                    .inflate(R.layout.row_customer, parent, false)
-            viewHolder = ViewHolder(view)
-            view.tag = viewHolder
+        fun bind(text: String?) {
+            wordItemView.text = text
         }
 
-        val customer = mData[position]
-        viewHolder.title.text = String.format("%s %s", customer.firstName, customer.lastName)
-
-        return view!!""")
+        companion object {
+            fun create(parent: ViewGroup): CryptoCoinHolder {
+                val view: View = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.recyclerview_item, parent, false)
+                return CryptoCoinHolder(view)
+            }
+        }
     }
-//    internal class ViewHolder(view: View) {
-//
-//        var title: TextView
-//
-//        init {
-//            title = view.customer_title
-//        }
-//    }
+
+    class CryptoCoinsComparator : DiffUtil.ItemCallback<CryptoCoin>() {
+        override fun areItemsTheSame(oldItem: CryptoCoin, newItem: CryptoCoin): Boolean {
+            return oldItem === newItem
+        }
+
+        override fun areContentsTheSame(oldItem: CryptoCoin, newItem: CryptoCoin): Boolean {
+            return oldItem.name == newItem.name
+        }
+    }
 }

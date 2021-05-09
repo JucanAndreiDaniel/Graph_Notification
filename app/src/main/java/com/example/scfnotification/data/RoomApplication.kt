@@ -1,22 +1,26 @@
 package com.example.scfnotification.data
 import android.app.Application
-import com.example.scfnotification.data.entities.CryptoCoin
-import java.sql.Timestamp
+import com.example.scfnotification.data.repositories.CryptoCoinRepository
+import com.example.scfnotification.ui.favourites.FavouritesViewModel
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 
 class RoomApplication : Application() {
 
+    private val cryptoModule = module {
+        factory { AppDatabase.getDatabase(RoomApplication()).CryptoCoinDao() }
+        factory { CryptoCoinRepository(get()) }
+        viewModel { FavouritesViewModel(get()) }
+    }
     override fun onCreate() {
         super.onCreate()
-
-            val database = AppDatabase.getInstance(context = this@RoomApplication)
-
-            if (database.CryptoCoinDao().all.isEmpty()) {
-                val cryptoCoins: MutableList<CryptoCoin> = mutableListOf()
-                    val coin = CryptoCoin(id="bitcoin",symbol = "btc",name="Bitcoin",image="",lastUpdated ="")
-                    cryptoCoins.add(coin)
-                database.CryptoCoinDao().insertAll(cryptoCoins = cryptoCoins)
-            }
+        startKoin {
+            androidContext(this@RoomApplication)
+            modules(cryptoModule)
+        }
     }
 
 }
