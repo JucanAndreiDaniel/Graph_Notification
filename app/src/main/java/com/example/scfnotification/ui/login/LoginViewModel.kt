@@ -24,10 +24,9 @@ class LoginViewModel: ViewModel() {
         }
 
         val jsonString = jsonObject.toString()
+
         val json = MediaType.parse("application/json; charset=utf-8")
-
         val requestBody = RequestBody.create(json, jsonString)
-
 
         try {
             var result: String? = null

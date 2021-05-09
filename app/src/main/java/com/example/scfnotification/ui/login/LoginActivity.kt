@@ -13,8 +13,6 @@ import com.example.scfnotification.data.sharedpreferences.IPreferenceHelper
 import com.example.scfnotification.data.sharedpreferences.PreferenceManager
 import com.example.scfnotification.ui.main.MainActivity
 
-
-
 class LoginActivity : AppCompatActivity() {
 
     private var _usernameText: EditText? = null
@@ -23,13 +21,17 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
     private val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(applicationContext) }
 
-
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
+
+        if (preferenceHelper.getApiKey() != "") {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_login)
 
@@ -48,9 +50,10 @@ class LoginActivity : AppCompatActivity() {
         val username = _usernameText!!.text.toString()
         val password = _passwordText!!.text.toString()
         val token =  loginViewModel.login(username, password)
-        if(token != null){
-            onLoginSuccess()
+
+        if(token != null) {
             preferenceHelper.setApiKey(token)
+            onLoginSuccess()
         }
         else onLoginFailed()
 
@@ -70,9 +73,7 @@ class LoginActivity : AppCompatActivity() {
         _loginButton!!.isEnabled = true
     }
 
-
     companion object {
         const val TAG = "LoginActivity"
-
     }
 }
