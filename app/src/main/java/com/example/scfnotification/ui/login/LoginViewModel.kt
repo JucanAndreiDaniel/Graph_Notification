@@ -9,7 +9,7 @@ import java.io.IOException
 import java.util.concurrent.CountDownLatch
 
 class LoginViewModel: ViewModel() {
-    fun login(username:String,password:String): Boolean {
+    fun login(username:String,password:String): String? {
         Log.d("TAG", "Login")
 
         val url = "https://stockcrypto.ddns.net/api-token-auth/"
@@ -30,7 +30,7 @@ class LoginViewModel: ViewModel() {
 
 
         try {
-            var result=false
+            var result: String? = null
             val client = OkHttpClient().newBuilder().build()
             val request = Request.Builder().post(requestBody).url(url).build()
             val responseCall = client.newCall(request)
@@ -40,7 +40,7 @@ class LoginViewModel: ViewModel() {
                 object : Callback {
 
                     override fun onFailure(call: Call, e: IOException) {
-                        val d = Log.d("Login", "Big Fail")
+                        Log.d("Login", "Big Fail")
                         e.printStackTrace()
                         countDownLatch.countDown()
                     }
@@ -49,9 +49,10 @@ class LoginViewModel: ViewModel() {
                         try {
                             val responseBody: ResponseBody? = response.body()
                             if (response.isSuccessful && response.code() == 200) {
-                                result= true
-                                Log.d(LoginActivity.TAG, result.toString())
-
+                                val results= responseBody!!.string()
+                                val jsonObj = JSONObject(results.substring(results.indexOf("{"), results.lastIndexOf("}") + 1))
+                                result = jsonObj.getString("token")
+                                Log.d("token:", result!!)
                             }
                             else {
                                 throw IOException("Response not successful: $response")
@@ -68,7 +69,7 @@ class LoginViewModel: ViewModel() {
             return result
 
         } catch (error: IOException) {
-            return false
+            return null
         }
 
     }

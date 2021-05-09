@@ -9,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.example.scfnotification.R
-import com.example.scfnotification.ui.favourites.FavouritesViewModel
+import com.example.scfnotification.data.sharedpreferences.IPreferenceHelper
+import com.example.scfnotification.data.sharedpreferences.PreferenceManager
 import com.example.scfnotification.ui.main.MainActivity
 
 
@@ -20,6 +21,8 @@ class LoginActivity : AppCompatActivity() {
     private var _passwordText: EditText? = null
     private var _loginButton: Button? = null
     private lateinit var loginViewModel: LoginViewModel
+    private val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(applicationContext) }
+
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +47,11 @@ class LoginActivity : AppCompatActivity() {
 
         val username = _usernameText!!.text.toString()
         val password = _passwordText!!.text.toString()
-        if(loginViewModel.login(username, password)) onLoginSuccess()
+        val token =  loginViewModel.login(username, password)
+        if(token != null){
+            onLoginSuccess()
+            preferenceHelper.setApiKey(token)
+        }
         else onLoginFailed()
 
     }
@@ -66,5 +73,6 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "LoginActivity"
+
     }
 }
