@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/five_minutes"
+        android:title="@string/_5_minutes" />
+
+    <item android:id="@+id/ten_minutes"
+        android:title="@string/_10_minutes" />
+
+    <item android:id="@+id/fifteen_minutes"
+        android:title="@string/_15_minutes" />
+
+    <item android:id="@+id/thirty_minutes"
+        android:title="@string/_30_minutes" />
+
+    <item android:id="@+id/sixty_minutes"
+        android:title="@string/_60_minutes" />
+</menu>

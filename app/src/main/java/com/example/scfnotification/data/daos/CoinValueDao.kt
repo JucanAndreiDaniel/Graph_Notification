@@ -3,7 +3,6 @@ package com.example.scfnotification.data.daos
 import androidx.room.*
 import com.example.scfnotification.data.entities.CoinValue
 
-
 @Dao
 interface CoinValueDao {
 

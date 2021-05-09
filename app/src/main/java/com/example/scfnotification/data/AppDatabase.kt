@@ -1,7 +1,5 @@
 package com.example.scfnotification.data
 
-
-
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -10,7 +8,6 @@ import com.example.scfnotification.data.daos.CoinValueDao
 import com.example.scfnotification.data.daos.CryptoCoinDao
 import com.example.scfnotification.data.entities.CoinValue
 import com.example.scfnotification.data.entities.CryptoCoin
-
 
 @Database(entities = [(CryptoCoin::class), (CoinValue::class)], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {

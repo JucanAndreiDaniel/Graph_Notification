@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scfnotification.R
 import com.example.scfnotification.data.adapters.BaseRecyclerAdapter
+import com.example.scfnotification.data.adapters.CryptoCoinAdapter
 
 class HomeFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView;
-    private lateinit var adapter: BaseRecyclerAdapter
-    private lateinit var currencyStringArray: Array<String>;
+    private lateinit var adapter: CryptoCoinAdapter
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -26,19 +26,14 @@ class HomeFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-        currencyStringArray = resources.getStringArray(R.array.countries_array)
         if (container != null) {
             currentContext = container.context
         }
 
-        adapter = BaseRecyclerAdapter(currentContext, currencyStringArray)
-
+        adapter = CryptoCoinAdapter(currentContext)
         recyclerView = root.findViewById(R.id.rv_recyclerView);
         recyclerView.adapter = adapter
-
-        if (container != null) {
-            recyclerView.layoutManager = LinearLayoutManager(currentContext)
-        }
+        recyclerView.layoutManager = LinearLayoutManager(currentContext)
 
         return root
     }
