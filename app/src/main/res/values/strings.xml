@@ -283,5 +283,16 @@
     <string name="menu_button">menu_button</string>
     <string name="more">More</string>
     <string name="currency">Currency</string>
+    <string name="other">Other</string>
+    <string name="rebuild_database">Rebuild Database</string>
+    <string name="preferences">Preferences</string>
+    <string name="notification_frequency">Notification Frequency</string>
+    <string name="change_how_often_you_will_receive_notifications">Change how often you will receive notifications</string>
+    <string name="bell_notification_icon">Bell Notification Icon</string>
+    <string name="_5_minutes">5 minutes</string>
+    <string name="_10_minutes">10 minutes</string>
+    <string name="_15_minutes">15 minutes</string>
+    <string name="_30_minutes">30 minutes</string>
+    <string name="_60_minutes">60 minutes</string>
 
 </resources>

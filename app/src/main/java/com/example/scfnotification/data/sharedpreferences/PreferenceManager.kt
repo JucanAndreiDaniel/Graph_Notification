@@ -2,20 +2,36 @@ package com.example.scfnotification.data.sharedpreferences
 
 import android.content.Context
 import android.content.SharedPreferences
+
 open class PreferenceManager constructor(context: Context) : IPreferenceHelper {
+
     private val prefName = "SharedToken"
     private var preferences: SharedPreferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+
     override fun setApiKey(apiKey: String) {
         preferences[API_KEY] = apiKey
     }
     override fun getApiKey(): String {
         return preferences[API_KEY] ?: ""
     }
+    override fun clearApiKey() {
+        preferences[API_KEY] = ""
+    }
+
+    override fun setNotificationFrequency(frequency: Int) {
+        preferences[NOTIFICATION_FREQUENCY] = frequency
+    }
+    override fun getNotificationFrequency(): Int {
+        return preferences[NOTIFICATION_FREQUENCY] ?: 30
+    }
+
     override fun clearPrefs() {
         preferences.edit().clear().apply()
     }
+
     companion object {
         const val API_KEY = "api_key"
+        const val NOTIFICATION_FREQUENCY = "notification_frequency"
     }
 }
 /**
