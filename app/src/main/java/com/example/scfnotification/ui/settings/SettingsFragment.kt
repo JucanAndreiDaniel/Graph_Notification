@@ -1,20 +1,20 @@
 package com.example.scfnotification.ui.settings
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.scfnotification.R
 import com.example.scfnotification.data.sharedpreferences.IPreferenceHelper
 import com.example.scfnotification.data.sharedpreferences.PreferenceManager
 import com.example.scfnotification.ui.login.LoginActivity
-import com.example.scfnotification.ui.main.MainActivity
 
 class SettingsFragment : Fragment() {
 
@@ -23,9 +23,9 @@ class SettingsFragment : Fragment() {
     private val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(this.requireContext()) }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
 
@@ -47,36 +47,56 @@ class SettingsFragment : Fragment() {
         val popupMenu = PopupMenu(this.context, view)
         popupMenu.inflate(R.menu.notifications_frequency_menu)
 
-        popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item : MenuItem? ->
+        popupMenu.setOnMenuItemClickListener { item: MenuItem? ->
 
-            when(item!!.itemId) {
+            when (item!!.itemId) {
                 R.id.five_minutes -> {
                     preferenceHelper.setNotificationFrequency(5)
-                    Toast.makeText(activity?.applicationContext, "Notification Frequency set to 5 minutes", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        activity?.applicationContext,
+                        "Notification Frequency set to 5 minutes",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
                 R.id.ten_minutes -> {
                     preferenceHelper.setNotificationFrequency(10)
-                    Toast.makeText(activity?.applicationContext, "Notification Frequency set to 10 minutes", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        activity?.applicationContext,
+                        "Notification Frequency set to 10 minutes",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
                 R.id.fifteen_minutes -> {
                     preferenceHelper.setNotificationFrequency(15)
-                    Toast.makeText(activity?.applicationContext, "Notification Frequency set to 15 minutes", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        activity?.applicationContext,
+                        "Notification Frequency set to 15 minutes",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
                 R.id.thirty_minutes -> {
                     preferenceHelper.setNotificationFrequency(30)
-                    Toast.makeText(activity?.applicationContext, "Notification Frequency set to 30 minutes", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        activity?.applicationContext,
+                        "Notification Frequency set to 30 minutes",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
                 R.id.sixty_minutes -> {
                     preferenceHelper.setNotificationFrequency(60)
-                    Toast.makeText(activity?.applicationContext, "Notification Frequency set to 60 minutes", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        activity?.applicationContext,
+                        "Notification Frequency set to 60 minutes",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
 
             true
-        })
+        }
     }
 }
