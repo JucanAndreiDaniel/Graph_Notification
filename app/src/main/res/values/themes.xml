@@ -24,5 +24,7 @@
 
     <style name="Theme.SCFNotification.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.SCFNotification.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.SCFNotification.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" >
+        <item name="android:colorForeground">@color/light_grey</item>
+    </style>
 </resources>
