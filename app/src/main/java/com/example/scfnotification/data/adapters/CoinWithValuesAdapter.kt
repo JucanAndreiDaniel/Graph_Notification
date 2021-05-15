@@ -1,14 +1,15 @@
 package com.example.scfnotification.data.adapters
 
-import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scfnotification.R
 import com.example.scfnotification.data.entities.CoinWithValues
+import com.example.scfnotification.ui.home.HomeFragmentDirections
 
 class CoinWithValuesAdapter(ct: Context) :
     RecyclerView.Adapter<CoinWithValuesAdapter.CoinsViewHolder>() {
@@ -36,18 +37,10 @@ class CoinWithValuesAdapter(ct: Context) :
             holder.current.text = coinValue[0].current.toString()
             holder.high.text = coinValue[0].high_1d.toString()
             holder.low.text = coinValue[0].low_1d.toString()
-            holder.itemView.setOnClickListener {
-                val dialog = Dialog(context)
-                dialog.setContentView(R.layout.details_fragment)
-                val coin_name: TextView = dialog.findViewById(R.id.coin_name)
-                val current: TextView = dialog.findViewById(R.id.current_price)
-                val high: TextView = dialog.findViewById(R.id.high)
-                val low: TextView = dialog.findViewById(R.id.low)
-                coin_name.text = coinWithValues.coin.name
-                current.text = coinWithValues.values[0].current.toString()
-                high.text = coinWithValues.values[0].high_1d.toString()
-                low.text = coinWithValues.values[0].low_1d.toString()
-                dialog.show()
+            val direction =
+                HomeFragmentDirections.actionNavigationHomeToNavigationDetail(coinWithValues.coin.id)
+            holder.itemView.setOnClickListener { view ->
+                view.findNavController().navigate(direction)
             }
         }
     }

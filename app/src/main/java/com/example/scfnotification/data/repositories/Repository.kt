@@ -1,8 +1,8 @@
 package com.example.scfnotification.data.repositories
 
 import android.content.Context
-import android.util.Log
 import com.example.scfnotification.data.AppDatabase
+import com.example.scfnotification.data.daos.CoinWithValuesDao
 import com.example.scfnotification.data.entities.CoinValue
 import com.example.scfnotification.data.entities.CoinWithValues
 import com.example.scfnotification.data.entities.CryptoCoin
@@ -11,8 +11,25 @@ import com.example.scfnotification.data.sharedpreferences.PreferenceManager
 import com.example.scfnotification.network.CryptoCoinValueItem
 import com.example.scfnotification.network.NetworkOperations
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Repository {
+@Singleton
+class Repository @Inject constructor(private val coinWithValues: CoinWithValuesDao) {
+
+    fun getFavs() = coinWithValues.getFavorites(true)
+
+    fun getCoinDetails() = coinWithValues.getCoinslimit(100)
+
+    fun filter(stringToFilter: String) = coinWithValues.getFilteredCoins(stringToFilter)
+
+    fun setFavorite(context: Context, coin: CryptoCoin) {
+        coinDatabase = initializeDB(context)
+
+        coinDatabase!!.CryptoCoinDao().update(coin)
+    }
+
+    fun getCoin(string: String) = coinWithValues.getCoin(string)
 
     companion object {
 
@@ -57,33 +74,6 @@ class Repository {
             }
             coinDatabase!!.CryptoCoinDao().insertAll(coins)
             coinDatabase!!.CoinValueDao().insertAll(values)
-        }
-
-        fun getFavs(context: Context): Flow<List<CoinWithValues>> {
-
-            coinDatabase = initializeDB(context)
-
-            coinTableModel = coinDatabase!!.CoinWithValuesDao().getFavorites(true)
-
-            return coinTableModel as Flow<List<CoinWithValues>>
-        }
-
-        fun getCoinDetails(context: Context): Flow<List<CoinWithValues>> {
-
-            coinDatabase = initializeDB(context)
-
-            coinTableModel = coinDatabase!!.CoinWithValuesDao().getCoinslimit(100)
-
-            return coinTableModel as Flow<List<CoinWithValues>>
-        }
-
-        fun filter(context: Context, stringToFilter: String): Flow<List<CoinWithValues>> {
-
-            coinDatabase = initializeDB(context)
-
-            coinTableModel = coinDatabase!!.CoinWithValuesDao().getFilteredCoins(stringToFilter)
-
-            return coinTableModel as Flow<List<CoinWithValues>>
         }
     }
 }

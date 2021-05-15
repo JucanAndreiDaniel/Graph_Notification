@@ -23,4 +23,8 @@ interface CoinWithValuesDao {
     @Transaction
     @Query("SELECT * FROM cryptoCoins WHERE name LIKE :stringToFilter")
     fun getFilteredCoins(stringToFilter: String): Flow<List<CoinWithValues>>
+
+    @Transaction
+    @Query("SELECT * FROM cryptoCoins WHERE name=:name")
+    fun getCoin(name: String): Flow<CoinWithValues>
 }

@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scfnotification.R
 import com.example.scfnotification.data.adapters.CoinWithValuesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
@@ -45,39 +47,35 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(currentContext)
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        homeViewModel.update(currentContext)
-        homeViewModel.getCoins(currentContext).observe(
-            viewLifecycleOwner,
-            {
-                if (it != null) {
-                    adapter.setCoinWithValuesList(it)
-                }
-            }
-        )
+//        homeViewModel.update(currentContext)
+        subscribeUi(currentContext, adapter)
 
-        homeSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        homeSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
-                    homeViewModel.filter(currentContext, query).observe(
+                    homeViewModel.filter(query).observe(
                         viewLifecycleOwner,
                         {
                             if (it != null) {
                                 adapter.setCoinWithValuesList(it)
                             }
-                        })
+                        }
+                    )
                 }
 
                 return false
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null && newText.length > 2) {
-                    homeViewModel.filter(currentContext, newText).observe(
+                    homeViewModel.filter(newText).observe(
                         viewLifecycleOwner,
                         {
                             if (it != null) {
                                 adapter.setCoinWithValuesList(it)
                             }
-                        })
+                        }
+                    )
                 }
 
                 return false
@@ -85,6 +83,17 @@ class HomeFragment : Fragment() {
         })
 
         return root
+    }
+
+    private fun subscribeUi(context: Context, adapter: CoinWithValuesAdapter) {
+        homeViewModel.getCoins.observe(
+            viewLifecycleOwner,
+            {
+                if (it != null) {
+                    adapter.setCoinWithValuesList(it)
+                }
+            }
+        )
     }
 
     override fun onResume() {

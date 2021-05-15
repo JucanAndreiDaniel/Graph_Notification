@@ -1,20 +1,19 @@
 package com.example.scfnotification.ui.favourites
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.scfnotification.R
 import com.example.scfnotification.data.adapters.CoinWithValuesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavouritesFragment : Fragment() {
 
     private lateinit var favouritesViewModel: FavouritesViewModel
@@ -38,8 +37,8 @@ class FavouritesFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(currentContext)
 
         favouritesViewModel = ViewModelProvider(this).get(FavouritesViewModel::class.java)
-        favouritesViewModel.update(currentContext)
-        favouritesViewModel.getFavorites(currentContext).observe(
+//        favouritesViewModel.update(currentContext)
+        favouritesViewModel.getFavorites.observe(
             viewLifecycleOwner,
             {
                 if (it != null) {
@@ -47,17 +46,17 @@ class FavouritesFragment : Fragment() {
                 }
             }
         )
-        val itemsSwipeRefresh = root.findViewById<SwipeRefreshLayout>(R.id.fav_swipe)
-        itemsSwipeRefresh.setProgressBackgroundColorSchemeColor(
-            ContextCompat.getColor(
-                currentContext,
-                R.color.light_orange
-            )
-        )
-        itemsSwipeRefresh.setColorSchemeColors(Color.WHITE)
-        itemsSwipeRefresh.setOnRefreshListener {
-            favouritesViewModel.update(currentContext)
-        }
+//        val itemsSwipeRefresh = root.findViewById<SwipeRefreshLayout>(R.id.fav_swipe)
+//        itemsSwipeRefresh.setProgressBackgroundColorSchemeColor(
+//            ContextCompat.getColor(
+//                currentContext,
+//                R.color.light_orange
+//            )
+//        )
+//        itemsSwipeRefresh.setColorSchemeColors(Color.WHITE)
+//        itemsSwipeRefresh.setOnRefreshListener {
+//            favouritesViewModel.update(currentContext)
+//        }
         return root
     }
 }

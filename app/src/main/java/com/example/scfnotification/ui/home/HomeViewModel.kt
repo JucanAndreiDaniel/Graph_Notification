@@ -7,19 +7,17 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scfnotification.data.entities.CoinWithValues
 import com.example.scfnotification.data.repositories.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val repository: Repository,
+) : ViewModel() {
 
-    private var liveDataCoins: Flow<List<CoinWithValues>>? = null
-
-    fun getCoins(context: Context): LiveData<List<CoinWithValues>> {
-        liveDataCoins = Repository.getCoinDetails(context)
-        return liveDataCoins!!.asLiveData()
-    }
+    val getCoins = repository.getCoinDetails().asLiveData()
 
     fun update(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -27,8 +25,7 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    fun filter(context: Context, stringToFilter: String): LiveData<List<CoinWithValues>> {
-        liveDataCoins = Repository.filter(context, "%$stringToFilter%")
-        return liveDataCoins!!.asLiveData()
+    fun filter(stringToFilter: String): LiveData<List<CoinWithValues>> {
+        return repository.filter(stringToFilter).asLiveData()
     }
 }

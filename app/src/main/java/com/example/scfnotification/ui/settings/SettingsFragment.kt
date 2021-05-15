@@ -17,7 +17,7 @@ import com.example.scfnotification.ui.login.LoginActivity
 
 class SettingsFragment : Fragment() {
 
-    private lateinit var logoutButton : Button
+    private lateinit var logoutButton: Button
     private lateinit var notificationCardView: CardView
     private val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(this.requireContext()) }
 
@@ -29,7 +29,7 @@ class SettingsFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
 
         logoutButton = root.findViewById(R.id.logoutButton)
-        logoutButton.setOnClickListener{ logout() }
+        logoutButton.setOnClickListener { logout() }
 
         notificationCardView = root.findViewById(R.id.notificationSettingCardView)
         notificationCardView.setOnClickListener { showNotificationSettingMenu(notificationCardView) }
@@ -44,11 +44,10 @@ class SettingsFragment : Fragment() {
 
     private fun showNotificationSettingMenu(view: View) {
 
-        val contextStyle = ContextThemeWrapper(this.context,R.style.popupMenuStyle)
+        val contextStyle = ContextThemeWrapper(this.context, R.style.popupMenuStyle)
         val popupMenu = PopupMenu(contextStyle, view)
         popupMenu.inflate(R.menu.notifications_frequency_menu)
         popupMenu.show()
-
 
         popupMenu.setOnMenuItemClickListener { item: MenuItem? ->
 

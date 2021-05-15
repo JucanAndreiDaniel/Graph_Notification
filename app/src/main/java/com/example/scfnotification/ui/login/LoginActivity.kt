@@ -12,7 +12,9 @@ import com.example.scfnotification.data.sharedpreferences.IPreferenceHelper
 import com.example.scfnotification.data.sharedpreferences.PreferenceManager
 import com.example.scfnotification.network.NetworkOperations
 import com.example.scfnotification.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private var _usernameText: EditText? = null
