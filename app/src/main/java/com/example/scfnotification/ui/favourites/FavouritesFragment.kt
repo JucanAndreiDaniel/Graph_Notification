@@ -8,82 +8,77 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.scfnotification.R
-import com.example.scfnotification.data.adapters.BaseRecyclerAdapter
-import com.example.scfnotification.data.retrofit.ApiInterface
-import com.example.scfnotification.data.retrofit.Coin
-import com.example.scfnotification.data.sharedpreferences.IPreferenceHelper
-import com.example.scfnotification.data.sharedpreferences.PreferenceManager
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
+import com.example.scfnotification.data.adapters.CoinWithValuesAdapter
 
 class FavouritesFragment : Fragment() {
 
+    private lateinit var favouritesViewModel: FavouritesViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: BaseRecyclerAdapter
+    private lateinit var adapter: CoinWithValuesAdapter
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-
         lateinit var currentContext: Context
 
-
-        val root = inflater.inflate(R.layout.fragment_favourites, container, false)
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
         if (container != null) {
             currentContext = container.context
         }
-        val itemsswipetorefresh : SwipeRefreshLayout = root.findViewById(R.id.itemsswipetorefresh);
-        val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(currentContext) }
-        val recyclerView = root.findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = BaseRecyclerAdapter(currentContext)
+        adapter = CoinWithValuesAdapter(currentContext)
+        recyclerView = root.findViewById(R.id.fav_recycler)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(currentContext)
-        var apiInterface = ApiInterface.create().getFavs("Token "+preferenceHelper.getApiKey())
-        var responseBody: List<Coin> = listOf()
-        apiInterface.enqueue( object : Callback<List<Coin>> {
-            override fun onResponse(call: Call<List<Coin>>?, response: Response<List<Coin>>?) {
 
-                if(response!!.isSuccessful) {
-                    responseBody = response.body()!!
-                    adapter.setCoinListItems(responseBody)
+        favouritesViewModel = ViewModelProvider(this).get(FavouritesViewModel::class.java)
+        favouritesViewModel.update(currentContext)
+        favouritesViewModel.getFavorites(currentContext).observe(
+            viewLifecycleOwner,
+            {
+                if (it != null) {
+                    adapter.setCoinWithValuesList(it)
                 }
-
             }
-
-            override fun onFailure(call: Call<List<Coin>>?, t: Throwable?) {
-            }
-        })
-        //** Set the colors of the Pull To Refresh View
-        itemsswipetorefresh.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(currentContext, R.color.light_orange))
+        )
+        val itemsswipetorefresh = root.findViewById<SwipeRefreshLayout>(R.id.fav_swipe)
+        itemsswipetorefresh.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(
+                currentContext,
+                R.color.light_orange
+            )
+        )
         itemsswipetorefresh.setColorSchemeColors(Color.WHITE)
-
         itemsswipetorefresh.setOnRefreshListener {
-            apiInterface = ApiInterface.create().getFavs("Token "+preferenceHelper.getApiKey())
-            apiInterface.enqueue( object : Callback<List<Coin>> {
-                override fun onResponse(call: Call<List<Coin>>?, response: Response<List<Coin>>?) {
-
-                    if(response!!.isSuccessful) {
-                        responseBody = response.body()!!
-                        adapter.setCoinListItems(responseBody)
-                        itemsswipetorefresh.isRefreshing = false
-                    }
-
-                }
-
-                override fun onFailure(call: Call<List<Coin>>?, t: Throwable?) {
-                }
-            })
-
-
+            favouritesViewModel.update(currentContext)
         }
         return root
     }
 }
+//        val root = inflater.inflate(R.layout.fragment_favourites, container, false)
+//
+//        val currentContext = requireContext()
+//        adapter = CoinWithValuesAdapter(currentContext)
+//        recyclerView = root.findViewById(R.id.rv_recyclerView)
+//        recyclerView.adapter = adapter
+//        recyclerView.layoutManager = LinearLayoutManager(currentContext)
+//
+//        recyclerView.adapter = adapter
+//        recyclerView.layoutManager = LinearLayoutManager(currentContext)
+//       
+//        favouritesViewModel = ViewModelProvider(this).get(FavouritesViewModel::class.java)
+//
+//        favouritesViewModel.getFavorites(currentContext)
+//        // ** Set the colors of the Pull To Refresh View
+//        
+//        
+//
+//        return root
+//    }
+// }

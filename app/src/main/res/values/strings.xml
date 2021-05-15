@@ -297,5 +297,7 @@
     <string name="current">current</string>
     <string name="high_1d">high_1d</string>
     <string name="low_1d">low_1d</string>
+    <string name="add_favorites">Add favorites</string>
+    <string name="you_have_no_favorites">You have no favorites</string>
 
 </resources>

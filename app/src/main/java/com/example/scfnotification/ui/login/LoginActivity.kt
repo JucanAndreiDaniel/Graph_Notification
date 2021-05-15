@@ -7,10 +7,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.ViewModelProvider
 import com.example.scfnotification.R
 import com.example.scfnotification.data.sharedpreferences.IPreferenceHelper
 import com.example.scfnotification.data.sharedpreferences.PreferenceManager
+import com.example.scfnotification.network.NetworkOperations
 import com.example.scfnotification.ui.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
     private var _usernameText: EditText? = null
     private var _passwordText: EditText? = null
     private var _loginButton: Button? = null
-    private lateinit var loginViewModel: LoginViewModel
     private val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(applicationContext) }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,29 +34,25 @@ class LoginActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_login)
 
-        loginViewModel =
-            ViewModelProvider(this).get(LoginViewModel::class.java)
         _loginButton = this.findViewById(R.id.login)
         _passwordText = this.findViewById(R.id.password)
         _usernameText = this.findViewById(R.id.username)
         _loginButton!!.setOnClickListener { login() }
-
     }
 
-    private fun login(){
+    private fun login() {
         _loginButton!!.isEnabled = false
 
         val username = _usernameText!!.text.toString()
         val password = _passwordText!!.text.toString()
-        val token =  loginViewModel.login(username, password)
+        val token = NetworkOperations().login(username, password)
 
-        if(token != null) {
+        if (token != null) {
             preferenceHelper.setApiKey(token)
             onLoginSuccess()
-        }
-        else onLoginFailed()
-
+        } else onLoginFailed()
     }
+
     override fun onBackPressed() {
         // Disable going back to the MainActivity
         moveTaskToBack(true)

@@ -1,27 +1,28 @@
 package com.example.scfnotification.ui.favourites
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.*
-import com.example.scfnotification.data.entities.CryptoCoin
-import com.example.scfnotification.data.repositories.CryptoCoinRepository
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.scfnotification.data.entities.CoinWithValues
+import com.example.scfnotification.data.repositories.Repository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class FavouritesViewModel(private val repository: CryptoCoinRepository) : ViewModel() {
+class FavouritesViewModel : ViewModel() {
 
-    val allCryptocoins : LiveData<List<CryptoCoin>> by lazy { repository.allCryptocoins.asLiveData() }
+    private var liveDataCoins: Flow<List<CoinWithValues>>? = null
 
-    fun insert(cryptoCoin: CryptoCoin) = viewModelScope.launch {
-        repository.insert(cryptoCoin)
+    fun getFavorites(context: Context): LiveData<List<CoinWithValues>> {
+        liveDataCoins = Repository.getFavs(context)
+        return liveDataCoins!!.asLiveData()
     }
-}
 
-class FavoriteViewModelFactory(private val repository: CryptoCoinRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FavouritesViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return FavouritesViewModel(repository) as T
+    fun update(context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            Repository.updateDB(context)
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

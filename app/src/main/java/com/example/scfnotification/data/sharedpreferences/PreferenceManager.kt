@@ -6,14 +6,17 @@ import android.content.SharedPreferences
 open class PreferenceManager constructor(context: Context) : IPreferenceHelper {
 
     private val prefName = "SharedToken"
-    private var preferences: SharedPreferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+    private var preferences: SharedPreferences =
+        context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
 
     override fun setApiKey(apiKey: String) {
         preferences[API_KEY] = apiKey
     }
+
     override fun getApiKey(): String {
         return preferences[API_KEY] ?: ""
     }
+
     override fun clearApiKey() {
         preferences[API_KEY] = ""
     }
@@ -21,6 +24,7 @@ open class PreferenceManager constructor(context: Context) : IPreferenceHelper {
     override fun setNotificationFrequency(frequency: Int) {
         preferences[NOTIFICATION_FREQUENCY] = frequency
     }
+
     override fun getNotificationFrequency(): Int {
         return preferences[NOTIFICATION_FREQUENCY] ?: 30
     }
@@ -34,6 +38,7 @@ open class PreferenceManager constructor(context: Context) : IPreferenceHelper {
         const val NOTIFICATION_FREQUENCY = "notification_frequency"
     }
 }
+
 /**
  * SharedPreferences extension function, to listen the edit() and apply() fun calls
  * on every SharedPreferences operation.
@@ -43,6 +48,7 @@ private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) 
     operation(editor)
     editor.apply()
 }
+
 /**
  * puts a key value pair in shared prefs if doesn't exists, otherwise updates value on given [key]
  */
@@ -56,6 +62,7 @@ private operator fun SharedPreferences.set(key: String, value: Any?) {
         else -> throw UnsupportedOperationException("Not yet implemented")
     }
 }
+
 /**
  * finds value on given key.
  * [T] is the type of value
