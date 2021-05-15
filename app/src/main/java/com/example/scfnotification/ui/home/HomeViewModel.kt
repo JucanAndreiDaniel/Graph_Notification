@@ -9,6 +9,7 @@ import com.example.scfnotification.data.entities.CoinWithValues
 import com.example.scfnotification.data.repositories.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
@@ -22,8 +23,12 @@ class HomeViewModel : ViewModel() {
 
     fun update(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-
             Repository.updateDB(context)
         }
+    }
+
+    fun filter(context: Context, stringToFilter: String): LiveData<List<CoinWithValues>> {
+        liveDataCoins = Repository.filter(context, "%$stringToFilter%")
+        return liveDataCoins!!.asLiveData()
     }
 }

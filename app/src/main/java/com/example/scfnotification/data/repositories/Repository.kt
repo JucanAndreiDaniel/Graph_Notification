@@ -1,6 +1,7 @@
 package com.example.scfnotification.data.repositories
 
 import android.content.Context
+import android.util.Log
 import com.example.scfnotification.data.AppDatabase
 import com.example.scfnotification.data.entities.CoinValue
 import com.example.scfnotification.data.entities.CoinWithValues
@@ -72,6 +73,15 @@ class Repository {
             coinDatabase = initializeDB(context)
 
             coinTableModel = coinDatabase!!.CoinWithValuesDao().getCoinslimit(100)
+
+            return coinTableModel as Flow<List<CoinWithValues>>
+        }
+
+        fun filter(context: Context, stringToFilter: String): Flow<List<CoinWithValues>> {
+
+            coinDatabase = initializeDB(context)
+
+            coinTableModel = coinDatabase!!.CoinWithValuesDao().getFilteredCoins(stringToFilter)
 
             return coinTableModel as Flow<List<CoinWithValues>>
         }

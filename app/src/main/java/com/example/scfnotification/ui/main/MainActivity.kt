@@ -7,6 +7,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.scfnotification.R
+import com.example.scfnotification.ui.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -38,5 +39,9 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // Disable going back to the MainActivity
         moveTaskToBack(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }

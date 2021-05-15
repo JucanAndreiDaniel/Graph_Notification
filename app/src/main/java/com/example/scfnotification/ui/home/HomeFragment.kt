@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CoinWithValuesAdapter
+    private lateinit var homeSearchView: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +32,10 @@ class HomeFragment : Fragment() {
         if (container != null) {
             currentContext = container.context
         }
+
+        homeSearchView = root.findViewById(R.id.sv_searchView)
+        homeSearchView.onActionViewCollapsed()
+        homeSearchView.isIconified = false
 
         adapter = CoinWithValuesAdapter(currentContext)
         recyclerView = root.findViewById(R.id.rv_recyclerView)
@@ -46,25 +52,41 @@ class HomeFragment : Fragment() {
                 }
             }
         )
+
+        homeSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    homeViewModel.filter(currentContext, query).observe(
+                        viewLifecycleOwner,
+                        {
+                            if (it != null) {
+                                adapter.setCoinWithValuesList(it)
+                            }
+                        })
+                }
+
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null && newText.length > 2) {
+                    homeViewModel.filter(currentContext, newText).observe(
+                        viewLifecycleOwner,
+                        {
+                            if (it != null) {
+                                adapter.setCoinWithValuesList(it)
+                            }
+                        })
+                }
+
+                return false
+            }
+        })
         return root
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        val search = menu.findItem(R.id.nav_search)
-//        val searchView = search?.actionView as SearchView
-//
-//        searchView.queryHint = "Search for something"
-//
-//        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                adapter.filter.filter(newText)
-//                return true
-//            }
-//        })
-//    }
+    override fun onResume() {
+        homeSearchView.clearFocus()
+        homeSearchView.onActionViewCollapsed()
+        super.onResume()
+    }
 }

@@ -15,7 +15,7 @@ class CoinWithValuesAdapter(ct: Context) :
 
     private var context: Context = ct
     private val layoutInflater: LayoutInflater = LayoutInflater.from(ct)
-    private var coinWithValuesList: List<CoinWithValues>? = null
+    private var coinWithValuesList: List<CoinWithValues> = listOf()
 
     fun setCoinWithValuesList(coinWithValuesList: List<CoinWithValues>) {
         this.coinWithValuesList = coinWithValuesList
@@ -29,7 +29,7 @@ class CoinWithValuesAdapter(ct: Context) :
 
     override fun onBindViewHolder(holder: CoinsViewHolder, position: Int) {
 
-        val coinWithValues = coinWithValuesList!![position]
+        val coinWithValues = coinWithValuesList[position]
         val coinValue = coinWithValues.values
         if (coinValue.isNotEmpty()) {
             holder.currencyName.text = coinWithValues.coin.name
@@ -53,11 +53,7 @@ class CoinWithValuesAdapter(ct: Context) :
     }
 
     override fun getItemCount(): Int {
-        return if (coinWithValuesList == null) {
-            0
-        } else {
-            coinWithValuesList!!.size
-        }
+        return coinWithValuesList.size
     }
 
     class CoinsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

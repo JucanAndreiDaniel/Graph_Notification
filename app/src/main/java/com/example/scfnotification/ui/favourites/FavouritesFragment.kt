@@ -47,38 +47,17 @@ class FavouritesFragment : Fragment() {
                 }
             }
         )
-        val itemsswipetorefresh = root.findViewById<SwipeRefreshLayout>(R.id.fav_swipe)
-        itemsswipetorefresh.setProgressBackgroundColorSchemeColor(
+        val itemsSwipeRefresh = root.findViewById<SwipeRefreshLayout>(R.id.fav_swipe)
+        itemsSwipeRefresh.setProgressBackgroundColorSchemeColor(
             ContextCompat.getColor(
                 currentContext,
                 R.color.light_orange
             )
         )
-        itemsswipetorefresh.setColorSchemeColors(Color.WHITE)
-        itemsswipetorefresh.setOnRefreshListener {
+        itemsSwipeRefresh.setColorSchemeColors(Color.WHITE)
+        itemsSwipeRefresh.setOnRefreshListener {
             favouritesViewModel.update(currentContext)
         }
         return root
     }
 }
-//        val root = inflater.inflate(R.layout.fragment_favourites, container, false)
-//
-//        val currentContext = requireContext()
-//        adapter = CoinWithValuesAdapter(currentContext)
-//        recyclerView = root.findViewById(R.id.rv_recyclerView)
-//        recyclerView.adapter = adapter
-//        recyclerView.layoutManager = LinearLayoutManager(currentContext)
-//
-//        recyclerView.adapter = adapter
-//        recyclerView.layoutManager = LinearLayoutManager(currentContext)
-//       
-//        favouritesViewModel = ViewModelProvider(this).get(FavouritesViewModel::class.java)
-//
-//        favouritesViewModel.getFavorites(currentContext)
-//        // ** Set the colors of the Pull To Refresh View
-//        
-//        
-//
-//        return root
-//    }
-// }
