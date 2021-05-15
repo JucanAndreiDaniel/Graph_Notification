@@ -299,5 +299,7 @@
     <string name="low_1d">low_1d</string>
     <string name="add_favorites">Add favorites</string>
     <string name="you_have_no_favorites">You have no favorites</string>
+    <string name="favourite_notification_icon">Favourite Notification Icon</string>
+    <string name="search_bar_on_favourites_tab">Search Bar on Favourites Tab</string>
 
 </resources>

@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_home"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="64dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:ignore="MissingConstraints" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
 
-    <TextView
-        android:id="@+id/tv_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/no_results"
-        android:textSize="20sp"
-        android:visibility="gone"
-        tools:ignore="MissingConstraints" />
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
 
-    <SearchView
-        android:id="@+id/sv_searchView"
-        android:layout_width="380dp"
-        android:layout_height="62dp"
-        android:background="@drawable/gray_rectangle"
-        android:focusable="false"
-        android:focusableInTouchMode="true"
-        app:layout_constraintBottom_toTopOf="@+id/rv_recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+
+            app:toolbarId="@+id/toolbar">
+
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/sv_searchView"/>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+
+
+        android:layout_height="731dp"
+        app:layout_anchor="@+id/nestedScrollView"
+        app:layout_anchorGravity="center"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            tools:ignore="MissingConstraints"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

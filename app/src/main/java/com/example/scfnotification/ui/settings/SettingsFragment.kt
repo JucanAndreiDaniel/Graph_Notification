@@ -6,12 +6,14 @@ import android.view.*
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.example.scfnotification.R
 import com.example.scfnotification.data.sharedpreferences.IPreferenceHelper
 import com.example.scfnotification.data.sharedpreferences.PreferenceManager
 import com.example.scfnotification.ui.login.LoginActivity
+
 
 class SettingsFragment : Fragment() {
 
