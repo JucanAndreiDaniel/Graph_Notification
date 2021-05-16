@@ -1,12 +1,10 @@
 package com.example.scfnotification.ui.home
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +21,7 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CoinWithValuesAdapter
     private lateinit var homeSearchView: SearchView
+    private var allCoins = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,44 +47,14 @@ class HomeFragment : Fragment() {
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 //        homeViewModel.update(currentContext)
-        subscribeUi(currentContext, adapter)
-
-        homeSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    homeViewModel.filter(query).observe(
-                        viewLifecycleOwner,
-                        {
-                            if (it != null) {
-                                adapter.setCoinWithValuesList(it)
-                            }
-                        }
-                    )
-                }
-
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null && newText.length > 2) {
-                    homeViewModel.filter(newText).observe(
-                        viewLifecycleOwner,
-                        {
-                            if (it != null) {
-                                adapter.setCoinWithValuesList(it)
-                            }
-                        }
-                    )
-                }
-
-                return false
-            }
-        })
+        showCoins(adapter)
+        showFilteredCoins(adapter)
 
         return root
     }
 
-    private fun subscribeUi(context: Context, adapter: CoinWithValuesAdapter) {
+    private fun showCoins(adapter: CoinWithValuesAdapter) {
+        allCoins = true
         homeViewModel.getCoins.observe(
             viewLifecycleOwner,
             {
@@ -94,6 +63,44 @@ class HomeFragment : Fragment() {
                 }
             }
         )
+    }
+
+    private fun showFilteredCoins(adapter: CoinWithValuesAdapter) {
+        homeSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    homeViewModel.filter(query).observe(
+                        viewLifecycleOwner,
+                        {
+                            if (it != null) {
+                                allCoins = false
+                                adapter.setCoinWithValuesList(it)
+                            }
+                        }
+                    )
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                if (newText != null && newText.length > 2) {
+                    homeViewModel.filter(newText).observe(
+                        viewLifecycleOwner,
+                        {
+                            if (it != null) {
+                                allCoins = false
+                                adapter.setCoinWithValuesList(it)
+                            }
+                        }
+                    )
+                } else {
+                    if (!allCoins)
+                        showCoins(adapter)
+                }
+                return false
+            }
+        })
     }
 
     override fun onResume() {
