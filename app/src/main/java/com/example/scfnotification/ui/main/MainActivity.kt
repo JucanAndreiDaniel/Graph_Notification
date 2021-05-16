@@ -17,16 +17,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+        hideActionBar()
         setContentView(R.layout.activity_main)
         navView = findViewById(R.id.nav_view)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
@@ -50,6 +46,13 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // Disable going back to the MainActivity
         moveTaskToBack(true)
+    }
+
+    fun hideActionBar() {
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
     }
 
     override fun onResume() {

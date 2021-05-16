@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scfnotification.R
-import com.example.scfnotification.data.adapters.CoinWithValuesAdapter
+import com.example.scfnotification.data.adapters.CoinWithValuesAdapterList
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +19,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CoinWithValuesAdapter
+    private lateinit var adapter: CoinWithValuesAdapterList
     private lateinit var homeSearchView: SearchView
     private var allCoins = false
 
@@ -38,34 +38,16 @@ class HomeFragment : Fragment() {
 
         homeSearchView = root.findViewById(R.id.sv_searchView)
         homeSearchView.onActionViewCollapsed()
-        homeSearchView.isIconified = false
+        homeSearchView.setOnClickListener { homeSearchView.isIconified = false }
 
-        adapter = CoinWithValuesAdapter(currentContext)
+        adapter = CoinWithValuesAdapterList()
         recyclerView = root.findViewById(R.id.rv_recyclerView)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(currentContext)
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-//        homeViewModel.update(currentContext)
+        homeViewModel.update(currentContext)
         showCoins(adapter)
-        showFilteredCoins(adapter)
-
-        return root
-    }
-
-    private fun showCoins(adapter: CoinWithValuesAdapter) {
-        allCoins = true
-        homeViewModel.getCoins.observe(
-            viewLifecycleOwner,
-            {
-                if (it != null) {
-                    adapter.setCoinWithValuesList(it)
-                }
-            }
-        )
-    }
-
-    private fun showFilteredCoins(adapter: CoinWithValuesAdapter) {
         homeSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
@@ -74,7 +56,7 @@ class HomeFragment : Fragment() {
                         {
                             if (it != null) {
                                 allCoins = false
-                                adapter.setCoinWithValuesList(it)
+                                adapter.submitList(it)
                             }
                         }
                     )
@@ -90,7 +72,7 @@ class HomeFragment : Fragment() {
                         {
                             if (it != null) {
                                 allCoins = false
-                                adapter.setCoinWithValuesList(it)
+                                adapter.submitList(it)
                             }
                         }
                     )
@@ -101,6 +83,20 @@ class HomeFragment : Fragment() {
                 return false
             }
         })
+
+        return root
+    }
+
+    private fun showCoins(adapter: CoinWithValuesAdapterList) {
+        allCoins = true
+        homeViewModel.getCoins.observe(
+            viewLifecycleOwner,
+            {
+                if (it != null) {
+                    adapter.submitList(it)
+                }
+            }
+        )
     }
 
     override fun onResume() {

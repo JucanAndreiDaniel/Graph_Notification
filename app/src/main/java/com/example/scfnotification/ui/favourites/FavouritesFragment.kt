@@ -1,51 +1,37 @@
 package com.example.scfnotification.ui.favourites
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.scfnotification.R
-import com.example.scfnotification.data.adapters.CoinWithValuesAdapter
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import com.example.scfnotification.data.adapters.CoinWithValuesAdapterList
+import com.example.scfnotification.databinding.FragmentFavouritesBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavouritesFragment : Fragment() {
 
-    private lateinit var favouritesViewModel: FavouritesViewModel
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CoinWithValuesAdapter
+    private val favouritesViewModel: FavouritesViewModel by viewModels()
+    private lateinit var binding: FragmentFavouritesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        lateinit var currentContext: Context
+    ): View {
 
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        if (container != null) {
-            currentContext = container.context
+        binding = FragmentFavouritesBinding.inflate(inflater, container, false)
+        val adapter = CoinWithValuesAdapterList()
+        binding.favRecycler.adapter = CoinWithValuesAdapterList()
+
+        binding.addFav.setOnClickListener {
+            view?.let { it1 -> fragmentSwitch(it1) }
         }
-        adapter = CoinWithValuesAdapter(currentContext)
-        recyclerView = root.findViewById(R.id.fav_recycler)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(currentContext)
-
-        favouritesViewModel = ViewModelProvider(this).get(FavouritesViewModel::class.java)
 //        favouritesViewModel.update(currentContext)
-        favouritesViewModel.getFavorites.observe(
-            viewLifecycleOwner,
-            {
-                if (it != null) {
-                    adapter.setCoinWithValuesList(it)
-                }
-            }
-        )
+        showFavorites(adapter, binding)
 //        val itemsSwipeRefresh = root.findViewById<SwipeRefreshLayout>(R.id.fav_swipe)
 //        itemsSwipeRefresh.setProgressBackgroundColorSchemeColor(
 //            ContextCompat.getColor(
@@ -57,6 +43,22 @@ class FavouritesFragment : Fragment() {
 //        itemsSwipeRefresh.setOnRefreshListener {
 //            favouritesViewModel.update(currentContext)
 //        }
-        return root
+        return binding.root
+    }
+
+    private fun showFavorites(
+        adapter: CoinWithValuesAdapterList,
+        binding: FragmentFavouritesBinding
+    ) {
+        favouritesViewModel.getFavorites.observe(viewLifecycleOwner) { result ->
+            binding.hasCoins = !result.isNullOrEmpty()
+            adapter.submitList(result)
+        }
+    }
+
+    private fun fragmentSwitch(view: View) {
+        val direction =
+            FavouritesFragmentDirections.actionNavigationFavouritesToNavigationHome()
+        view.findNavController().navigate(direction)
     }
 }

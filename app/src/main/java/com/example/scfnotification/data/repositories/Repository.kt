@@ -4,13 +4,11 @@ import android.content.Context
 import com.example.scfnotification.data.AppDatabase
 import com.example.scfnotification.data.daos.CoinWithValuesDao
 import com.example.scfnotification.data.entities.CoinValue
-import com.example.scfnotification.data.entities.CoinWithValues
 import com.example.scfnotification.data.entities.CryptoCoin
 import com.example.scfnotification.data.sharedpreferences.IPreferenceHelper
 import com.example.scfnotification.data.sharedpreferences.PreferenceManager
 import com.example.scfnotification.network.CryptoCoinValueItem
 import com.example.scfnotification.network.NetworkOperations
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,23 +17,21 @@ class Repository @Inject constructor(private val coinWithValues: CoinWithValuesD
 
     fun getFavs() = coinWithValues.getFavorites(true)
 
+    fun getFav(string: String) = coinWithValues.getFavorite(string)
+
     fun getCoinDetails() = coinWithValues.getCoinslimit(100)
 
     fun filter(stringToFilter: String) = coinWithValues.getFilteredCoins(stringToFilter)
 
-    fun setFavorite(context: Context, coin: CryptoCoin) {
-        coinDatabase = initializeDB(context)
-
-        coinDatabase!!.CryptoCoinDao().update(coin)
+    fun setFavorite(coinId: String) {
+        coinWithValues.setFav(coinId)
     }
 
-    fun getCoin(string: String) = coinWithValues.getCoin(string)
+    fun getCoin(coinId: String) = coinWithValues.getCoin(coinId)
 
     companion object {
 
         private var coinDatabase: AppDatabase? = null
-
-        private var coinTableModel: Flow<List<CoinWithValues>>? = null
 
         private fun initializeDB(context: Context): AppDatabase {
             return AppDatabase.getDatabase(context)

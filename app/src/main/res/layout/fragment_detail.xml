@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.example.scfnotification.data.entities.CoinWithValues" />
 
         <variable
@@ -17,7 +18,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorSurface"
+        android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
         tools:context="com.example.scfnotification.ui.main.MainActivity"
         tools:ignore="MergeRootFrame">
@@ -37,11 +38,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:collapsedTitleGravity="center"
-                app:collapsedTitleTextAppearance="@style/TextAppearance.Toolbar.Text"
                 app:contentScrim="?attr/colorSurface"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:statusBarScrim="?attr/colorSurface"
+                app:title="@{viewmodel.coin.coin.name}"
                 app:titleEnabled="false"
                 app:toolbarId="@id/toolbar">
 
@@ -50,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="278dp"
                     android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop"
+                    app:imageFromUrl="@{viewmodel.coin.coin.image}"
                     app:layout_collapseMode="parallax" />
 
                 <com.google.android.material.appbar.MaterialToolbar
@@ -60,6 +60,7 @@
                     android:background="@android:color/transparent"
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
+                    app:menu="@menu/details_menu"
                     app:navigationIcon="@drawable/ic_detail_back"
                     app:titleTextColor="?attr/colorOnSurface" />
 
@@ -89,6 +90,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_horizontal"
+                    android:text="@{viewmodel.coin.coin.name}"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -96,18 +98,96 @@
                     tools:text="Coin" />
 
                 <TextView
-                    android:id="@+id/coin_description"
-                    style="?android:attr/textAppearanceMedium"
-                    android:layout_width="0dp"
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:minHeight="95dp"
-                    android:textIsSelectable="true"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="84dp"
+                    android:text="High Today"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="62dp" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="84dp"
+                    android:text="Current"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="62dp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="84dp"
+                    android:layout_marginEnd="28dp"
+                    android:text="Low Today"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="62dp" />
+
+                <TextView
+                    android:id="@+id/low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{Double.toString(viewmodel.coin.values[0].low_1d)}"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="62dp" />
+
+                <TextView
+                    android:id="@+id/current_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{Double.toString(viewmodel.coin.values[0].current)}"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="62dp" />
+
+                <TextView
+                    android:id="@+id/high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{Double.toString(viewmodel.coin.values[0].high_1d)}"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="62dp" />
+
+                <TextView
+                    android:id="@+id/empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="150dp"
+                    android:text="   "
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/coin_detail_name"
-                    tools:text="Details about the coin" />
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="62dp" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -120,6 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:tint="@android:color/white"
+            app:isFabGone="@{viewmodel.isFav}"
             app:layout_anchor="@id/appbar"
             app:layout_anchorGravity="bottom|end"
             app:shapeAppearance="@style/ShapeAppearance.FAB"

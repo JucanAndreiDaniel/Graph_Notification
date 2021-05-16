@@ -1,12 +1,8 @@
 package com.example.scfnotification.ui.details
 
-import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.example.scfnotification.data.entities.CoinWithValues
-import com.example.scfnotification.data.entities.CryptoCoin
 import com.example.scfnotification.data.repositories.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,17 +13,17 @@ class DetailViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
 
-//    val coinID: String = savedStateHandle.get<String>(COIN_ID_SAVED_STATE_KEY)!!
+    val coinId: String = savedStateHandle.get<String>(COIN_ID_SAVED_STATE_KEY)!!
 
-    fun coin(coin: CoinWithValues): LiveData<CoinWithValues> {
-        return repository.getCoin(coin.coin.id).asLiveData()
-    }
+    val coin = repository.getCoin(coinId).asLiveData()
 
-    fun favorite(context: Context, coin: CryptoCoin) {
-        repository.setFavorite(context, coin)
+    val isFav = repository.getFav(coinId).asLiveData().toString().isEmpty()
+
+    fun favorite(coinId: String) {
+        repository.setFavorite(coinId)
     }
 
     companion object {
-        private const val COIN_ID_SAVED_STATE_KEY = "coinID"
+        private const val COIN_ID_SAVED_STATE_KEY = "coinId"
     }
 }
