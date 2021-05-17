@@ -8,5 +8,9 @@ interface IPreferenceHelper {
     fun setNotificationFrequency(frequency: Int)
     fun getNotificationFrequency(): Int
 
+    fun setUsername(username: String)
+    fun getUsername(): String
+    fun clearUsername()
+
     fun clearPrefs()
 }

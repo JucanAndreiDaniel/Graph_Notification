@@ -29,6 +29,18 @@ open class PreferenceManager constructor(context: Context) : IPreferenceHelper {
         return preferences[NOTIFICATION_FREQUENCY] ?: 30
     }
 
+    override fun setUsername(username: String) {
+        preferences[USERNAME] = username
+    }
+
+    override fun getUsername(): String {
+        return preferences[USERNAME] ?: ""
+    }
+
+    override fun clearUsername() {
+        preferences[USERNAME] = ""
+    }
+
     override fun clearPrefs() {
         preferences.edit().clear().apply()
     }
@@ -36,6 +48,7 @@ open class PreferenceManager constructor(context: Context) : IPreferenceHelper {
     companion object {
         const val API_KEY = "api_key"
         const val NOTIFICATION_FREQUENCY = "notification_frequency"
+        const val USERNAME = "username"
     }
 }
 

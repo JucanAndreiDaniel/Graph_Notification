@@ -46,8 +46,8 @@ class BaseRecyclerAdapter(ct: Context) :
         return coinList.size
     }
 
-    fun setCoinListItems(coinListz: List<CryptoCoinValueItem>) {
-        this.coinList = coinListz
+    fun setCoinListItems(coinList: List<CryptoCoinValueItem>) {
+        this.coinList = coinList
         notifyDataSetChanged()
     }
 
