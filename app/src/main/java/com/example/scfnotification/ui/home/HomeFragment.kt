@@ -1,15 +1,18 @@
 package com.example.scfnotification.ui.home
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.scfnotification.R
 import com.example.scfnotification.data.adapters.CoinWithValuesAdapterList
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +24,7 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CoinWithValuesAdapterList
     private lateinit var homeSearchView: SearchView
+    private lateinit var swipeView: SwipeRefreshLayout
     private var allCoins = false
 
     override fun onCreateView(
@@ -83,6 +87,11 @@ class HomeFragment : Fragment() {
                 return false
             }
         })
+
+        swipeView = root.findViewById(R.id.swipeContainer)
+        swipeView.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(currentContext, R.color.light_orange))
+        swipeView.setColorSchemeColors(Color.DKGRAY)
+        swipeView.setOnRefreshListener { SwipeRefreshLayout.OnRefreshListener { homeViewModel.update(currentContext) } }
 
         return root
     }
