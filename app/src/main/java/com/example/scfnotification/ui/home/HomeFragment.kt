@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(currentContext)
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        homeViewModel.update(currentContext)
+//        homeViewModel.update(currentContext)
         showCoins(adapter)
         homeSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

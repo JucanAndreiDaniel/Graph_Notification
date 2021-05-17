@@ -38,16 +38,15 @@ class DetailFragment : Fragment() {
         ).apply {
             viewmodel = detailViewModel
             lifecycleOwner = viewLifecycleOwner
-            Callback { coin ->
-                coin.let {
-                    hideAppBarFab(fab)
-                    detailViewModel.favorite(coin.coin.id)
-                    Snackbar.make(
-                        root,
-                        "Added to favorites",
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
+            Callback {
+                hideAppBarFab(fab)
+                Log.d("Callback", "add $it to fav")
+                detailViewModel.favorite(it.coin.id)
+                Snackbar.make(
+                    root,
+                    "Added to favorites",
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
 
             var isToolbarShown = false

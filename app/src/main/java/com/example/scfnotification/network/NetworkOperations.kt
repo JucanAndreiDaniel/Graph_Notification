@@ -36,6 +36,30 @@ class NetworkOperations {
         return responseBody
     }
 
+    fun getFavorites(APIKEY: String): List<CryptoCoinValueItem> {
+
+        val countDownLatch = CountDownLatch(1)
+        val apiInterface = ApiInterface.create().getFavorites("Token $APIKEY")
+        var responseBody: List<CryptoCoinValueItem> = listOf()
+        apiInterface.enqueue(object : Callback<List<CryptoCoinValueItem>> {
+            override fun onResponse(
+                call: Call<List<CryptoCoinValueItem>>?,
+                response: Response<List<CryptoCoinValueItem>>?
+            ) {
+                if (response!!.isSuccessful) {
+                    responseBody = response.body()!!
+                }
+                countDownLatch.countDown()
+            }
+
+            override fun onFailure(call: Call<List<CryptoCoinValueItem>>?, t: Throwable?) {
+                countDownLatch.countDown()
+            }
+        })
+        countDownLatch.await()
+        return responseBody
+    }
+
     fun login(username: String, password: String): String? {
         Log.d("TAG", "Login")
 

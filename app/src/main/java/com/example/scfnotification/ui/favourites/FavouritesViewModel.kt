@@ -12,14 +12,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavouritesViewModel @Inject constructor(
-    repository: Repository,
+    private val repository: Repository,
 ) : ViewModel() {
 
-    val getFavorites = repository.getFavs().asLiveData()
+    val getFavorites = repository.getFavorites().asLiveData()
 
     fun update(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            Repository.updateDB(context)
+//            Repository.updateDB(context)
+            repository.updateFavorite(context)
         }
     }
 }

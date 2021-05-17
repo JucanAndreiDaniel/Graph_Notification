@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         moveTaskToBack(true)
     }
 
-    fun hideActionBar() {
+    private fun hideActionBar() {
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {

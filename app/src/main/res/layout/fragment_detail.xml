@@ -199,12 +199,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
+            android:onClick="@{() -> viewmodel.favorite(viewmodel.coin.coin.id)}"
             android:tint="@android:color/white"
             app:isFabGone="@{viewmodel.isFav}"
             app:layout_anchor="@id/appbar"
             app:layout_anchorGravity="bottom|end"
             app:shapeAppearance="@style/ShapeAppearance.FAB"
-            app:srcCompat="@drawable/ic_plus" />
+            app:srcCompat="@drawable/ic_plus"
+            tools:ignore="ContentDescription" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

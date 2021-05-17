@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class Repository @Inject constructor(private val coinWithValues: CoinWithValuesDao) {
 
-    fun getFavs() = coinWithValues.getFavorites(true)
+    fun getFavorites() = coinWithValues.getFavorites(true)
 
     fun getFav(string: String) = coinWithValues.getFavorite(string)
 
@@ -25,6 +25,15 @@ class Repository @Inject constructor(private val coinWithValues: CoinWithValuesD
 
     fun setFavorite(coinId: String) {
         coinWithValues.setFav(coinId)
+    }
+
+    fun updateFavorite(context: Context) {
+        val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(context) }
+        val favs: List<CryptoCoinValueItem> =
+            NetworkOperations().getFavorites(preferenceHelper.getApiKey())
+        for (item in favs) {
+            setFavorite(item.coin_id)
+        }
     }
 
     fun getCoin(coinId: String) = coinWithValues.getCoin(coinId)

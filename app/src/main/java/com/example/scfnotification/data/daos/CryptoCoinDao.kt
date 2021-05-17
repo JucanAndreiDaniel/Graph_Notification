@@ -34,4 +34,7 @@ interface CryptoCoinDao {
 
     @Query("DELETE FROM cryptoCoins")
     fun deleteAll()
+
+    @Query("UPDATE cryptoCoins SET favorite = 1 WHERE id =:coinId")
+    fun setFav(coinId: String)
 }

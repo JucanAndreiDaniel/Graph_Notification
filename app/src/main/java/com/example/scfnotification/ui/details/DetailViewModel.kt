@@ -1,10 +1,15 @@
 package com.example.scfnotification.ui.details
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.scfnotification.data.repositories.Repository
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +25,11 @@ class DetailViewModel @Inject constructor(
     val isFav = repository.getFav(coinId).asLiveData().toString().isEmpty()
 
     fun favorite(coinId: String) {
-        repository.setFavorite(coinId)
+        Log.d("Fav", "add $coinId to fav")
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.setFavorite(coinId)
+        }
+        Log.d("FavResult", "added $coinId to fav")
     }
 
     companion object {

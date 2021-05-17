@@ -34,7 +34,7 @@ class CoinWithValuesAdapterList :
         private val binding: RowLayoutBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            val savedStateHandle: SavedStateHandle = SavedStateHandle().apply {
+            SavedStateHandle().apply {
                 set("coinId", binding.coin?.coin?.id)
             }
             binding.setClickListener {
