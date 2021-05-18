@@ -5,6 +5,10 @@ interface IPreferenceHelper {
     fun getApiKey(): String
     fun clearApiKey()
 
+    fun setFireBaseKey(firebaseKey: String)
+    fun getFireBaseKey(): String
+    fun clearFireBaseKey()
+
     fun setNotificationFrequency(frequency: Int)
     fun getNotificationFrequency(): Int
 

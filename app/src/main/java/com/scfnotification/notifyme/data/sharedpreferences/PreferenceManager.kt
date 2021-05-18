@@ -21,6 +21,18 @@ open class PreferenceManager constructor(context: Context) : IPreferenceHelper {
         preferences[API_KEY] = ""
     }
 
+    override fun setFireBaseKey(firebaseKey: String) {
+        preferences[FIREBASE_KEY] = firebaseKey
+    }
+
+    override fun getFireBaseKey(): String {
+        return preferences[FIREBASE_KEY] ?: ""
+    }
+
+    override fun clearFireBaseKey() {
+        preferences[FIREBASE_KEY] = ""
+    }
+
     override fun setNotificationFrequency(frequency: Int) {
         preferences[NOTIFICATION_FREQUENCY] = frequency
     }
@@ -49,6 +61,7 @@ open class PreferenceManager constructor(context: Context) : IPreferenceHelper {
         const val API_KEY = "api_key"
         const val NOTIFICATION_FREQUENCY = "notification_frequency"
         const val USERNAME = "username"
+        const val FIREBASE_KEY = "firebase_key"
     }
 }
 

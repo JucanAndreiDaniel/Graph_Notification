@@ -307,5 +307,6 @@
     <string name="userWelcome">Hello, user!</string>
     <string name="notifyme">NotifyMe</string>
     <string name="notification_triggered">Notification Triggered</string>
+    <string name="untokenized_notification">%$</string>
 
 </resources>
