@@ -51,8 +51,8 @@ class MainActivity : AppCompatActivity() {
 
             val token = task.result
 
-            val message = String.format(R.string.notification_triggered.toString(), token)
-            Log.d(TAG, message)
+            val message = token.toString()
+            Log.d(TAG, "poggies: $message")
             Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
         })
     }
