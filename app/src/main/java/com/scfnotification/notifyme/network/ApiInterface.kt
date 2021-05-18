@@ -5,6 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiInterface {
@@ -14,6 +15,9 @@ interface ApiInterface {
 
     @GET("favorites/")
     fun getFavorites(@Header("Authorization") token: String): Call<List<CryptoCoinValueItem>>
+
+    @POST("favorites/")
+    fun addFavorite(coinID: String, @Header("Authorization") token: String)
 
     @GET("coin/{id}")
     fun getCoin(

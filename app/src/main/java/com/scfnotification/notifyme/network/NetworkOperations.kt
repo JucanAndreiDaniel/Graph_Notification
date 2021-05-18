@@ -37,7 +37,6 @@ class NetworkOperations {
     }
 
     fun getFavorites(APIKEY: String): List<CryptoCoinValueItem> {
-
         val countDownLatch = CountDownLatch(1)
         val apiInterface = ApiInterface.create().getFavorites("Token $APIKEY")
         var responseBody: List<CryptoCoinValueItem> = listOf()
@@ -58,6 +57,11 @@ class NetworkOperations {
         })
         countDownLatch.await()
         return responseBody
+    }
+
+    fun addFavorite(coinID: String, APIKEY: String) {
+        val countDownLatch = CountDownLatch(1)
+        val apiInterface = ApiInterface.create().addFavorite(coinID,"Token $APIKEY")
     }
 
     fun login(username: String, password: String): String? {

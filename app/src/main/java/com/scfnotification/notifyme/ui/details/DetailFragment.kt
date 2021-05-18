@@ -41,7 +41,7 @@ class DetailFragment : Fragment() {
             Callback {
                 hideAppBarFab(fab)
                 Log.d("Callback", "add $it to fav")
-                detailViewModel.favorite(it.coin.id)
+                detailViewModel.favorite(it.coin.id, requireContext())
                 Snackbar.make(
                     root,
                     "Added to favorites",
