@@ -62,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun onLoginSuccess() {
         _loginButton!!.isEnabled = true
+        preferenceHelper.setUsername(_usernameText!!.text.toString())
         startActivity(Intent(this, MainActivity::class.java))
     }
 

@@ -1,4 +1,4 @@
-package com.scfnotification.notifyme.ui.home
+package com.example.scfnotification.ui.home
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.scfnotification.R
+import com.example.scfnotification.data.adapters.CoinWithValuesAdapterList
 import com.scfnotification.notifyme.R
 import com.scfnotification.notifyme.data.adapters.CoinWithValuesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,8 +22,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CoinWithValuesAdapter
+    private lateinit var adapter: CoinWithValuesAdapterList
     private lateinit var homeSearchView: SearchView
+    private lateinit var swipeView: SwipeRefreshLayout
     private var allCoins = false
 
     override fun onCreateView(
@@ -40,7 +44,7 @@ class HomeFragment : Fragment() {
         homeSearchView.onActionViewCollapsed()
         homeSearchView.setOnClickListener { homeSearchView.isIconified = false }
 
-        adapter = CoinWithValuesAdapter()
+        adapter = CoinWithValuesAdapterList()
         recyclerView = root.findViewById(R.id.rv_recyclerView)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(currentContext)
@@ -84,10 +88,15 @@ class HomeFragment : Fragment() {
             }
         })
 
+        swipeView = root.findViewById(R.id.swipeContainer)
+        swipeView.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(currentContext, R.color.light_orange))
+        swipeView.setColorSchemeColors(Color.DKGRAY)
+        swipeView.setOnRefreshListener { SwipeRefreshLayout.OnRefreshListener { homeViewModel.update(currentContext) } }
+
         return root
     }
 
-    private fun showCoins(adapter: CoinWithValuesAdapter) {
+    private fun showCoins(adapter: CoinWithValuesAdapterList) {
         allCoins = true
         homeViewModel.getCoins.observe(
             viewLifecycleOwner,

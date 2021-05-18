@@ -301,5 +301,9 @@
     <string name="you_have_no_favorites">You have no favorites</string>
     <string name="favourite_notification_icon">Favourite Notification Icon</string>
     <string name="search_bar_on_favourites_tab">Search Bar on Favourites Tab</string>
+    <string name="image_for_currency_stock_forex">Image for currency/stock/forex</string>
+    <string name="crypto">Crypto</string>
+    <string name="Crypto">Switch</string>
+    <string name="userWelcome">Hello, user!</string>
 
 </resources>
