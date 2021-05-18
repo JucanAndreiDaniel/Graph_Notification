@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "811114338880",
+    "project_id": "scfnotification-notifyme",
+    "storage_bucket": "scfnotification-notifyme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811114338880:android:c6ba0e7cb5b9776d2d5da5",
+        "android_client_info": {
+          "package_name": "com.scfnotification.notifyme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811114338880-dq9luife32n035s3pv17jsoein227i5l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAATNKttrOKv_MuK6GHR5GVxDaTwsrQNyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811114338880-dq9luife32n035s3pv17jsoein227i5l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

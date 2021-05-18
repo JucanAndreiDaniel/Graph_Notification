@@ -305,5 +305,7 @@
     <string name="crypto">Crypto</string>
     <string name="Crypto">Switch</string>
     <string name="userWelcome">Hello, user!</string>
+    <string name="notifyme">NotifyMe</string>
+    <string name="notification_triggered">Notification Triggered</string>
 
 </resources>

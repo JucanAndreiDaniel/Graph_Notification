@@ -1,6 +1,7 @@
 package com.scfnotification.notifyme.ui.favourites
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,13 +27,14 @@ class FavouritesFragment : Fragment() {
 
         binding = FragmentFavouritesBinding.inflate(inflater, container, false)
         val adapter = CoinWithValuesAdapter()
-        binding.favRecycler.adapter = CoinWithValuesAdapter()
+        binding.favRecycler.adapter = adapter
         binding.favRecycler.layoutManager = LinearLayoutManager(context)
 
         binding.addFav.setOnClickListener {
             view?.let { it1 -> fragmentSwitch(it1) }
         }
         favouritesViewModel.update(requireContext())
+
         showFavorites(adapter, binding)
 //        val itemsSwipeRefresh = root.findViewById<SwipeRefreshLayout>(R.id.fav_swipe)
 //        itemsSwipeRefresh.setProgressBackgroundColorSchemeColor(
@@ -59,11 +61,6 @@ class FavouritesFragment : Fragment() {
                 adapter.submitList(it)
             }
         )
-//        favouritesViewModel.getFavorites.observe(viewLifecycleOwner) { result ->
-//            binding.hasCoins = !result.isNullOrEmpty()
-//            Log.d("hasCoins", binding.hasCoins.toString())
-//            adapter.submitList(result)
-//        }
     }
 
     private fun fragmentSwitch(view: View) {

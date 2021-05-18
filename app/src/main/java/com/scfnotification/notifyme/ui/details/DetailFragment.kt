@@ -77,6 +77,7 @@ class DetailFragment : Fragment() {
                 view.findNavController().navigateUp()
             }
         }
+
         setHasOptionsMenu(true)
         return binding.root
     }
