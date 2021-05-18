@@ -4,15 +4,15 @@
 
     <data>
 
-        <import type="com.example.scfnotification.data.entities.CoinWithValues" />
+        <import type="com.scfnotification.notifyme.data.entities.CoinWithValues" />
 
         <variable
             name="viewmodel"
-            type="com.example.scfnotification.ui.details.DetailViewModel" />
+            type="com.scfnotification.notifyme.ui.details.DetailViewModel" />
 
         <variable
             name="callback"
-            type="com.example.scfnotification.ui.details.DetailFragment.Callback" />
+            type="com.scfnotification.notifyme.ui.details.DetailFragment.Callback" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
-        tools:context="com.example.scfnotification.ui.main.MainActivity"
+        tools:context="com.scfnotification.notifyme.ui.main.MainActivity"
         tools:ignore="MergeRootFrame">
 
         <com.google.android.material.appbar.AppBarLayout

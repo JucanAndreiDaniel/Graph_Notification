@@ -2,13 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="clickListener"
-            type="android.view.View.OnClickListener"/>
+            type="android.view.View.OnClickListener" />
+
         <variable
             name="coin"
-            type="com.example.scfnotification.data.entities.CoinWithValues"/>
+            type="com.scfnotification.notifyme.data.entities.CoinWithValues" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.scfnotification.ui.home.HomeFragment"
+        android:name="com.scfnotification.notifyme.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_detail"
             app:destination="@id/navigation_detail" />
@@ -17,9 +17,9 @@
 
     <fragment
         android:id="@+id/navigation_favourites"
-        android:name="com.example.scfnotification.ui.favourites.FavouritesFragment"
+        android:name="com.scfnotification.notifyme.ui.favourites.FavouritesFragment"
         android:label="@string/title_favourites"
-        tools:layout="@layout/fragment_favourites" >
+        tools:layout="@layout/fragment_favourites">
         <action
             android:id="@+id/action_navigation_favourites_to_navigation_detail"
             app:destination="@id/navigation_detail" />
@@ -30,19 +30,19 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.scfnotification.ui.notifications.NotificationsFragment"
+        android:name="com.scfnotification.notifyme.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.example.scfnotification.ui.settings.SettingsFragment"
+        android:name="com.scfnotification.notifyme.ui.settings.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/navigation_detail"
-        android:name="com.example.scfnotification.ui.details.DetailFragment"
+        android:name="com.scfnotification.notifyme.ui.details.DetailFragment"
         android:label="Details"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="coinId"
             app:argType="string" />

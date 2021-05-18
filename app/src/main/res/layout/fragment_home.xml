@@ -53,7 +53,7 @@
             app:layout_constraintVertical_bias="0"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             tools:ignore="MissingConstraints"
-            tools:listitem="@layout/row_layout"/>
+            tools:listitem="@layout/row_layout" />
 
     </androidx.core.widget.NestedScrollView>
 
