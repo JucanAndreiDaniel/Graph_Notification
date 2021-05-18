@@ -3,6 +3,8 @@ package com.scfnotification.notifyme.data.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +12,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.scfnotification.notifyme.data.entities.CoinWithValues
 import com.scfnotification.notifyme.databinding.RowLayoutBinding
+import com.scfnotification.notifyme.ui.favourites.FavouritesFragmentDirections
+import com.scfnotification.notifyme.ui.home.HomeFragment
 import com.scfnotification.notifyme.ui.home.HomeFragmentDirections
 
 class CoinWithValuesAdapter :
@@ -48,8 +52,12 @@ class CoinWithValuesAdapter :
             coin: CoinWithValues,
             view: View
         ) {
-            val direction =
+            val activeFragment: Fragment = FragmentManager.findFragment(view)
+            val direction = if (activeFragment is HomeFragment) {
                 HomeFragmentDirections.actionNavigationHomeToNavigationDetail(coin.coin.id)
+            } else {
+                FavouritesFragmentDirections.actionNavigationFavouritesToNavigationDetail(coin.coin.id)
+            }
             view.findNavController().navigate(direction)
         }
 
