@@ -22,6 +22,9 @@ interface CoinValueDao {
     @Update
     fun update(CoinValue: CoinValue)
 
+    @Update
+    fun updateAll(CoinValues: List<CoinValue>)
+
     @Delete
     fun delete(CoinValue: CoinValue)
 

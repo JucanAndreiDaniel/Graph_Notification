@@ -59,9 +59,27 @@ class NetworkOperations {
         return responseBody
     }
 
-    fun addFavorite(coinID: String, APIKEY: String) {
+    fun addFavorite(coinID: String, APIKEY: String): Boolean {
         val countDownLatch = CountDownLatch(1)
-        val apiInterface = ApiInterface.create().addFavorite(coinID,"Token $APIKEY")
+        var result = false
+        val apiInterface = ApiInterface.create().addFavorite("Token $APIKEY", coinID)
+        apiInterface.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>?,
+                response: Response<Boolean>?
+            ) {
+                if (response!!.isSuccessful) {
+                    result = true
+                }
+                countDownLatch.countDown()
+            }
+
+            override fun onFailure(call: Call<Boolean>?, t: Throwable?) {
+                countDownLatch.countDown()
+            }
+        })
+        countDownLatch.await()
+        return result
     }
 
     fun login(username: String, password: String): String? {

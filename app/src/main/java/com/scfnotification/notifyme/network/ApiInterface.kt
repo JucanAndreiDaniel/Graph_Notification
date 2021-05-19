@@ -3,10 +3,7 @@ package com.scfnotification.notifyme.network
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiInterface {
 
@@ -16,8 +13,12 @@ interface ApiInterface {
     @GET("favorites/")
     fun getFavorites(@Header("Authorization") token: String): Call<List<CryptoCoinValueItem>>
 
-    @POST("favorites/")
-    fun addFavorite(coinID: String, @Header("Authorization") token: String)
+    @FormUrlEncoded
+    @POST("addFav/")
+    fun addFavorite(
+        @Header("Authorization") token: String,
+        @Field("crypto_id") crypto_id: String
+    ): Call<Boolean>
 
     @GET("coin/{id}")
     fun getCoin(

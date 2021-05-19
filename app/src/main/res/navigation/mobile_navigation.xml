@@ -18,8 +18,7 @@
     <fragment
         android:id="@+id/navigation_favourites"
         android:name="com.scfnotification.notifyme.ui.favourites.FavouritesFragment"
-        android:label="@string/title_favourites"
-        tools:layout="@layout/fragment_favourites">
+        android:label="@string/title_favourites">
         <action
             android:id="@+id/action_navigation_favourites_to_navigation_detail"
             app:destination="@id/navigation_detail" />

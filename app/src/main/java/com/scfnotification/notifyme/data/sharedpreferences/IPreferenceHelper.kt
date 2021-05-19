@@ -16,5 +16,8 @@ interface IPreferenceHelper {
     fun getUsername(): String
     fun clearUsername()
 
+    fun checkFirstRun(): String
+    fun setFirstRun(check: String)
+
     fun clearPrefs()
 }

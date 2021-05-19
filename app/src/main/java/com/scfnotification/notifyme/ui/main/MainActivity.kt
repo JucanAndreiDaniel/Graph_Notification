@@ -43,18 +43,20 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+            OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                val token = task.result
+
+                val message = token.toString()
+                Log.d(TAG, "poggies: $message")
+                Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
             }
-
-            val token = task.result
-
-            val message = token.toString()
-            Log.d(TAG, "poggies: $message")
-            Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
-        })
+        )
     }
 
     fun hideBottomNav() {

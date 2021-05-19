@@ -36,9 +36,9 @@ class DetailFragment : Fragment() {
             container,
             false
         ).apply {
-            viewmodel = detailViewModel
+            viewModel = detailViewModel
             lifecycleOwner = viewLifecycleOwner
-            Callback {
+            callback = Callback {
                 hideAppBarFab(fab)
                 Log.d("Callback", "add $it to fav")
                 detailViewModel.favorite(it.coin.id, requireContext())
@@ -48,8 +48,8 @@ class DetailFragment : Fragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
-
             var isToolbarShown = false
+            detailViewModel.showFav()
 
 //         scroll change listener begins at Y = 0 when image is fully collapsed
 
@@ -95,6 +95,6 @@ class DetailFragment : Fragment() {
     }
 
     fun interface Callback {
-        fun add(coin: CoinWithValues)
+        fun setFav(coin: CoinWithValues)
     }
 }

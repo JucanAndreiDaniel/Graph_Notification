@@ -25,7 +25,11 @@ class DetailViewModel @Inject constructor(
 
     val coin = repository.getCoin(coinId).asLiveData()
 
-    val isFav = repository.getFav(coinId).asLiveData().toString().isEmpty()
+    val isFav = repository.getFav(coinId).asLiveData()
+
+    fun showFav() {
+        Log.d("checkFav", isFav.value.toString())
+    }
 
     fun favorite(coinId: String, context: Context) {
         val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(context) }

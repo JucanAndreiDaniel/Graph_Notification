@@ -53,11 +53,20 @@ open class PreferenceManager constructor(context: Context) : IPreferenceHelper {
         preferences[USERNAME] = ""
     }
 
+    override fun checkFirstRun(): String {
+        return preferences[FIRST_RUN] ?: "Yes"
+    }
+
+    override fun setFirstRun(check: String) {
+        preferences[FIRST_RUN] = check
+    }
+
     override fun clearPrefs() {
         preferences.edit().clear().apply()
     }
 
     companion object {
+        const val FIRST_RUN = "first_run"
         const val API_KEY = "api_key"
         const val NOTIFICATION_FREQUENCY = "notification_frequency"
         const val USERNAME = "username"

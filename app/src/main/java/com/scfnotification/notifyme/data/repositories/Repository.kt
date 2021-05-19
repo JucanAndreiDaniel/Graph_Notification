@@ -77,8 +77,14 @@ class Repository @Inject constructor(private val coinWithValues: CoinWithValuesD
                 coins += coin
                 values += value
             }
-            coinDatabase!!.CryptoCoinDao().insertAll(coins)
-            coinDatabase!!.CoinValueDao().insertAll(values)
+            if (preferenceHelper.checkFirstRun() == "Yes") {
+                coinDatabase!!.CryptoCoinDao().insertAll(coins)
+                coinDatabase!!.CoinValueDao().insertAll(values)
+                preferenceHelper.setFirstRun("No")
+            } else {
+                coinDatabase!!.CryptoCoinDao().updateAll(coins)
+                coinDatabase!!.CoinValueDao().updateAll(values)
+            }
         }
     }
 }

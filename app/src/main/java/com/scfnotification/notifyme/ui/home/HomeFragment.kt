@@ -99,7 +99,7 @@ class HomeFragment : Fragment() {
         swipeView.setOnRefreshListener {
             SwipeRefreshLayout.OnRefreshListener {
                 homeViewModel.update(
-                    currentContext
+                    currentContext,
                 )
             }
         }
