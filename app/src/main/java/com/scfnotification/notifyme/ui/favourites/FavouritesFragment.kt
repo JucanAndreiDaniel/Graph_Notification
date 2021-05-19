@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scfnotification.notifyme.data.adapters.CoinWithValuesAdapter
+import com.scfnotification.notifyme.data.entities.CoinWithValues
 import com.scfnotification.notifyme.databinding.FragmentFavouritesBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,7 +58,7 @@ class FavouritesFragment : Fragment() {
             viewLifecycleOwner,
             {
                 binding.hasCoins = !it.isNullOrEmpty()
-                adapter.submitList(it)
+                adapter.submitList(it as MutableList<CoinWithValues>?)
             }
         )
     }

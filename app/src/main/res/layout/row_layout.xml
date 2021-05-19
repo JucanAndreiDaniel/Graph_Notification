@@ -12,6 +12,8 @@
         <variable
             name="coin"
             type="com.scfnotification.notifyme.data.entities.CoinWithValues" />
+
+        <import type="com.scfnotification.notifyme.data.adapters.CoinWithValuesAdapter.CoinsViewHolder"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -15,6 +15,8 @@ import com.scfnotification.notifyme.databinding.RowLayoutBinding
 import com.scfnotification.notifyme.ui.favourites.FavouritesFragmentDirections
 import com.scfnotification.notifyme.ui.home.HomeFragment
 import com.scfnotification.notifyme.ui.home.HomeFragmentDirections
+import java.math.BigDecimal
+import java.math.BigInteger
 
 class CoinWithValuesAdapter :
     ListAdapter<CoinWithValues, RecyclerView.ViewHolder>(CoinDiffCallback()) {
@@ -27,6 +29,29 @@ class CoinWithValuesAdapter :
                 false
             )
         )
+    }
+
+    private fun setRoundedNumber(number: BigDecimal): BigDecimal {
+        return if (number.equals(number.toInt()))
+            number
+        else
+            number.setScale(2, BigDecimal.ROUND_CEILING)
+    }
+
+    override fun submitList(list: MutableList<CoinWithValues>?) {
+        if (list != null) {
+            for (element in list) {
+                if (element.coin.id != "bitcoin") {
+                    element.values[0].high_1d =
+                        setRoundedNumber(BigDecimal.valueOf(element.values[0].high_1d)).toDouble()
+                    element.values[0].current =
+                        setRoundedNumber(BigDecimal.valueOf(element.values[0].current)).toDouble()
+                    element.values[0].low_1d =
+                        setRoundedNumber(BigDecimal.valueOf(element.values[0].low_1d)).toDouble()
+                }
+            }
+        }
+        super.submitList(list)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

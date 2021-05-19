@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.scfnotification.notifyme.R
 import com.scfnotification.notifyme.data.adapters.CoinWithValuesAdapter
+import com.scfnotification.notifyme.data.entities.CoinWithValues
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,7 +61,7 @@ class HomeFragment : Fragment() {
                         {
                             if (it != null) {
                                 allCoins = false
-                                adapter.submitList(it)
+                                adapter.submitList(it as MutableList<CoinWithValues>?)
                             }
                         }
                     )
@@ -76,7 +77,7 @@ class HomeFragment : Fragment() {
                         {
                             if (it != null) {
                                 allCoins = false
-                                adapter.submitList(it)
+                                adapter.submitList(it as MutableList<CoinWithValues>?)
                             }
                         }
                     )
@@ -113,7 +114,7 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner,
             {
                 if (it != null) {
-                    adapter.submitList(it)
+                    adapter.submitList(it as MutableList<CoinWithValues>?)
                 }
             }
         )
