@@ -3,7 +3,6 @@ package com.scfnotification.notifyme.ui.main
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -53,8 +52,8 @@ class MainActivity : AppCompatActivity() {
                 val token = task.result
 
                 val message = token.toString()
-                Log.d(TAG, "poggies: $message")
-                Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
+                Log.d(TAG, "FireBase Token: $message")
+//                Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
             }
         )
     }
@@ -77,9 +76,5 @@ class MainActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 }
