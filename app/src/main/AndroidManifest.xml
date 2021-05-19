@@ -10,8 +10,7 @@
         android:label="Notifyme"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SCFNotification"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/Theme.SCFNotification">
         <activity
             android:name="com.scfnotification.notifyme.ui.login.LoginActivity"
             android:label="NotifyMe">
@@ -22,7 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name="com.scfnotification.notifyme.ui.main.MainActivity" />
-        <service android:name="com.scfnotification.notifyme.network.BaseFirebaseMessagingService"
+
+        <service
+            android:name="com.scfnotification.notifyme.network.BaseFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
