@@ -1,5 +1,6 @@
 package com.scfnotification.notifyme.network
 
+import android.os.Build
 import android.util.Log
 import okhttp3.* // ktlint-disable no-wildcard-imports
 import org.json.JSONException
@@ -29,6 +30,30 @@ class NetworkOperations {
             }
 
             override fun onFailure(call: Call<List<CryptoCoinValueItem>>?, t: Throwable?) {
+                countDownLatch.countDown()
+            }
+        })
+        countDownLatch.await()
+        return responseBody
+    }
+
+    fun sendFCM(APIKEY: String, FCMKEY: String): Boolean {
+        val countDownLatch = CountDownLatch(1)
+        val apiInterface = ApiInterface.create()
+            .sendFirebase("Token $APIKEY", FCMKEY, Build.MODEL, true, "android")
+        var responseBody: Boolean = false
+        apiInterface.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>?,
+                response: Response<Boolean>?
+            ) {
+                if (response!!.isSuccessful) {
+                    responseBody = response.body()!!
+                }
+                countDownLatch.countDown()
+            }
+
+            override fun onFailure(call: Call<Boolean>?, t: Throwable?) {
                 countDownLatch.countDown()
             }
         })

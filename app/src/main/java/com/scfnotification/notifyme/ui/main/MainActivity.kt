@@ -13,6 +13,9 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.scfnotification.notifyme.R
+import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
+import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
+import com.scfnotification.notifyme.network.NetworkOperations
 import com.scfnotification.notifyme.ui.home.HomeViewModel
 import com.scfnotification.notifyme.ui.login.LoginActivity.Companion.TAG
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var navView: BottomNavigationView
+    private val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
                 val message = token.toString()
                 Log.d(TAG, "FireBase Token: $message")
-//                Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
+                NetworkOperations().sendFCM(preferenceHelper.getApiKey(), message)
             }
         )
     }
