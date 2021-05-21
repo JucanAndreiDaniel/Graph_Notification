@@ -37,28 +37,19 @@ class NetworkOperations {
         return responseBody
     }
 
-    fun sendFCM(APIKEY: String, FCMKEY: String): Boolean {
-        val countDownLatch = CountDownLatch(1)
+    fun sendFCM(APIKEY: String, FCMKEY: String) {
         val apiInterface = ApiInterface.create()
             .sendFirebase("Token $APIKEY", FCMKEY, Build.MODEL, true, "android")
-        var responseBody: Boolean = false
         apiInterface.enqueue(object : Callback<Boolean> {
             override fun onResponse(
                 call: Call<Boolean>?,
                 response: Response<Boolean>?
             ) {
-                if (response!!.isSuccessful) {
-                    responseBody = response.body()!!
-                }
-                countDownLatch.countDown()
             }
 
             override fun onFailure(call: Call<Boolean>?, t: Throwable?) {
-                countDownLatch.countDown()
             }
         })
-        countDownLatch.await()
-        return responseBody
     }
 
     fun getFavorites(APIKEY: String): List<CryptoCoinValueItem> {
@@ -142,7 +133,10 @@ class NetworkOperations {
                         countDownLatch.countDown()
                     }
 
-                    override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                    override fun onResponse(
+                        call: okhttp3.Call,
+                        response: okhttp3.Response
+                    ) {
                         try {
                             val responseBody: ResponseBody? = response.body()
                             if (response.isSuccessful && response.code() == 200) {
