@@ -309,5 +309,7 @@
     <string name="notification_triggered">Notification Triggered</string>
     <string name="untokenized_notification">%$</string>
     <string name="coin_image">Coin Image</string>
+    <string name="coin">Coin</string>
+    <string name="value">Value</string>
 
 </resources>
