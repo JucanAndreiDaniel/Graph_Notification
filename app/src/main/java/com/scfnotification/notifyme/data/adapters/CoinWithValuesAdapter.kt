@@ -3,6 +3,7 @@ package com.scfnotification.notifyme.data.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.SavedStateHandle
@@ -10,13 +11,15 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.scfnotification.notifyme.data.entities.CoinWithValues
 import com.scfnotification.notifyme.databinding.RowLayoutBinding
 import com.scfnotification.notifyme.ui.favourites.FavouritesFragmentDirections
 import com.scfnotification.notifyme.ui.home.HomeFragment
 import com.scfnotification.notifyme.ui.home.HomeFragmentDirections
+import com.squareup.picasso.Picasso
 import java.math.BigDecimal
-import java.math.BigInteger
+
 
 class CoinWithValuesAdapter :
     ListAdapter<CoinWithValues, RecyclerView.ViewHolder>(CoinDiffCallback()) {

@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val repository: Repository,
+    private val repository: Repository
 ) : ViewModel() {
 
     val coinId: String = savedStateHandle.get<String>(COIN_ID_SAVED_STATE_KEY)!!
