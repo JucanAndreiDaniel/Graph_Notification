@@ -1,53 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/homeCoordinator"
+    android:id="@+id/homeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/homeCoordinator"
         android:layout_width="match_parent"
-        android:layout_height="64dp">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"
+            android:layout_height="64dp">
 
-            app:toolbarId="@+id/toolbar">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"
 
-            <SearchView
-                android:id="@+id/sv_searchView"
-                android:layout_width="411dp"
-                android:layout_height="64dp"
-                android:clickable="true"
-                android:contextClickable="true"
-                android:iconifiedByDefault="false">
+                app:toolbarId="@+id/toolbar">
 
-            </SearchView>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+                <SearchView
+                    android:id="@+id/sv_searchView"
+                    android:layout_width="411dp"
+                    android:layout_height="64dp"
+                    android:clickable="true"
+                    android:contextClickable="true"
+                    android:iconifiedByDefault="false">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
+                </SearchView>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/recyclerContainer"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,10 +58,8 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 tools:ignore="MissingConstraints"
-                tools:listitem="@layout/row_layout">
+                tools:listitem="@layout/row_layout" />
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-            </androidx.recyclerview.widget.RecyclerView>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </androidx.core.widget.NestedScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

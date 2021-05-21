@@ -90,7 +90,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        swipeView = root.findViewById(R.id.recyclerContainer)
+        swipeView = root.findViewById(R.id.homeRefreshLayout)
         recyclerView.isNestedScrollingEnabled = false;
 //        swipeView.isRefreshing = false
         swipeView.setProgressBackgroundColorSchemeColor(
@@ -107,6 +107,8 @@ class HomeFragment : Fragment() {
                 )
             }
         }
+//        swipeView.setOnRefreshListener {
+//            SwipeRefreshLayout.OnRefreshListener { homeViewModel.update(currentContext) } }
 
         return root
     }
