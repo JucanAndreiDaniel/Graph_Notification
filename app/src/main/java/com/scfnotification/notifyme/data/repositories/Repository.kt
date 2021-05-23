@@ -3,17 +3,22 @@ package com.scfnotification.notifyme.data.repositories
 import android.content.Context
 import com.scfnotification.notifyme.data.AppDatabase
 import com.scfnotification.notifyme.data.daos.CoinWithValuesDao
+import com.scfnotification.notifyme.data.entities.CoinAndNotification
 import com.scfnotification.notifyme.data.entities.CoinValue
 import com.scfnotification.notifyme.data.entities.CryptoCoin
+import com.scfnotification.notifyme.data.entities.Notification
 import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
 import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
 import com.scfnotification.notifyme.network.CryptoCoinValueItem
 import com.scfnotification.notifyme.network.NetworkOperations
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Repository @Inject constructor(private val coinWithValues: CoinWithValuesDao) {
+class Repository @Inject constructor(
+    private val coinWithValues: CoinWithValuesDao
+) {
 
     fun getFavorites() = coinWithValues.getFavorites(true)
 
@@ -44,6 +49,33 @@ class Repository @Inject constructor(private val coinWithValues: CoinWithValuesD
 
         private fun initializeDB(context: Context): AppDatabase {
             return AppDatabase.getDatabase(context)
+        }
+
+        fun setNotification(context: Context, notification: Notification) {
+            val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(context) }
+            NetworkOperations().setNotification(
+                preferenceHelper.getApiKey(),
+                notification.coin_id,
+                notification.value_type,
+                notification.final_value,
+                notification.via_mail
+            )
+            coinDatabase = initializeDB(context)
+            coinDatabase!!.NotificationDao().insert(notification)
+        }
+
+        fun getNotifications(context: Context): Flow<List<CoinAndNotification>> {
+            coinDatabase = initializeDB(context)
+            return coinDatabase!!.CoinAndNotificationDao().all()
+        }
+
+        fun updateNotifications(context: Context) {
+            val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(context) }
+            val data: List<Notification> =
+                NetworkOperations().getNotifications(preferenceHelper.getApiKey())
+            coinDatabase = initializeDB(context)
+            coinDatabase!!.NotificationDao().deleteAll()
+            coinDatabase!!.NotificationDao().insertAll(data)
         }
 
         fun updateDB(context: Context) {

@@ -1,6 +1,6 @@
 package com.scfnotification.notifyme.network
 
-import android.os.Build
+import com.scfnotification.notifyme.data.entities.Notification
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,6 +10,9 @@ interface ApiInterface {
 
     @GET("coins/")
     fun getCoins(@Header("Authorization") token: String): Call<List<CryptoCoinValueItem>>
+
+    @GET("notifications/")
+    fun getNotifications(@Header("Authorization") token: String): Call<List<Notification>>
 
     @GET("favorites/")
     fun getFavorites(@Header("Authorization") token: String): Call<List<CryptoCoinValueItem>>
@@ -36,6 +39,16 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("name") name: String
     ): Call<CryptoCoinValueItem>
+
+    @FormUrlEncoded
+    @POST("createNotificationApi")
+    fun addNotification(
+        @Header("Authorization") token: String,
+        @Field("optionCrypto") coin_id: String,
+        @Field("option") value_type: String,
+        @Field("value") final_value: Double,
+        @Field("viamail") via_mail: Boolean,
+    ): Call<Boolean>
 
     companion object {
 

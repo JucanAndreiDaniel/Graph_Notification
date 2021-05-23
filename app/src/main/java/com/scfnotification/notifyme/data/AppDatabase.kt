@@ -4,19 +4,23 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.scfnotification.notifyme.data.daos.CoinValueDao
-import com.scfnotification.notifyme.data.daos.CoinWithValuesDao
-import com.scfnotification.notifyme.data.daos.CryptoCoinDao
+import com.scfnotification.notifyme.data.daos.*
 import com.scfnotification.notifyme.data.entities.CoinValue
 import com.scfnotification.notifyme.data.entities.CryptoCoin
+import com.scfnotification.notifyme.data.entities.Notification
 
-@Database(entities = [(CryptoCoin::class), (CoinValue::class)], version = 1, exportSchema = false)
+@Database(
+    entities = [(CryptoCoin::class), (CoinValue::class), (Notification::class)],
+    version = 1,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun CryptoCoinDao(): CryptoCoinDao
-
     abstract fun CoinValueDao(): CoinValueDao
     abstract fun CoinWithValuesDao(): CoinWithValuesDao
+    abstract fun NotificationDao(): NotificationDao
+    abstract fun CoinAndNotificationDao(): CoinAndNotificationDao
 
     companion object {
         @Volatile

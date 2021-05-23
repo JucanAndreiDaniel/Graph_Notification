@@ -2,6 +2,7 @@ package com.scfnotification.notifyme.network
 
 import android.os.Build
 import android.util.Log
+import com.scfnotification.notifyme.data.entities.Notification
 import okhttp3.* // ktlint-disable no-wildcard-imports
 import org.json.JSONException
 import org.json.JSONObject
@@ -30,6 +31,55 @@ class NetworkOperations {
             }
 
             override fun onFailure(call: Call<List<CryptoCoinValueItem>>?, t: Throwable?) {
+                countDownLatch.countDown()
+            }
+        })
+        countDownLatch.await()
+        return responseBody
+    }
+
+    fun setNotification(
+        APIKEY: String,
+        coin_id: String,
+        value_type: String,
+        final_value: Double,
+        via_mail: Boolean
+    ) {
+        val apiInterface = ApiInterface.create().addNotification(
+            "Token $APIKEY",
+            coin_id,
+            value_type,
+            final_value,
+            via_mail,
+        )
+        apiInterface.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>?,
+                response: Response<Boolean>?
+            ) {
+            }
+
+            override fun onFailure(call: Call<Boolean>?, t: Throwable?) {
+            }
+        })
+    }
+
+    fun getNotifications(APIKEY: String): List<Notification> {
+        val countDownLatch = CountDownLatch(1)
+        val apiInterface = ApiInterface.create().getNotifications("Token $APIKEY")
+        var responseBody: List<Notification> = listOf()
+        apiInterface.enqueue(object : Callback<List<Notification>> {
+            override fun onResponse(
+                call: Call<List<Notification>>?,
+                response: Response<List<Notification>>?
+            ) {
+                if (response!!.isSuccessful) {
+                    responseBody = response.body()!!
+                }
+                countDownLatch.countDown()
+            }
+
+            override fun onFailure(call: Call<List<Notification>>?, t: Throwable?) {
                 countDownLatch.countDown()
             }
         })

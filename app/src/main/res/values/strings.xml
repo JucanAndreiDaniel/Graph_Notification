@@ -311,5 +311,10 @@
     <string name="coin_image">Coin Image</string>
     <string name="coin">Coin</string>
     <string name="value">Value</string>
+    <string name="value_bigger_than">Value Bigger than</string>
+    <string name="value_lower_than">Value Lower than</string>
+    <string name="value_equal_to">Value Equal to</string>
+    <string name="growth_in_percentage">Growth in Percentage</string>
+    <string name="decrease_in_percentage">Decrease in percentage</string>
 
 </resources>

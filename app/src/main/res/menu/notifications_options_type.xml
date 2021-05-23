@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/val_bigger"
+        android:title="@string/value_bigger_than" />
+
+    <item
+        android:id="@+id/val_lower"
+        android:title="@string/value_lower_than" />
+
+    <item
+        android:id="@+id/val_equal"
+        android:title="@string/value_equal_to" />
+
+    <item
+        android:id="@+id/val_g_perc"
+        android:title="@string/growth_in_percentage" />
+
+    <item
+        android:id="@+id/val_d_perc"
+        android:title="@string/decrease_in_percentage" />
+</menu>
