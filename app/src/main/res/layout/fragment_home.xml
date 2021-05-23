@@ -15,10 +15,8 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recyclerView"
@@ -33,7 +31,8 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 tools:ignore="MissingConstraints"
-                tools:listitem="@layout/row_layout">
+                tools:listitem="@layout/row_layout"
+                android:overScrollMode="never">
 
             </androidx.recyclerview.widget.RecyclerView>
         </androidx.core.widget.NestedScrollView>
@@ -53,20 +52,29 @@
                 app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
 
-                <SearchView
-                    android:id="@+id/sv_searchView"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:clickable="true"
-                    android:contextClickable="true"
-                    android:gravity="clip_horizontal|fill_horizontal|center_vertical|end"
-                    android:iconifiedByDefault="false"
-                    android:orientation="horizontal"
-                    android:scrollbarSize="0dp"
-                    android:tooltipText="@android:string/search_go">
+                    app:cardBackgroundColor="@color/white_transparent"
+                    app:cardCornerRadius="0dp">
 
-                </SearchView>
+                    <SearchView
+                        android:id="@+id/sv_searchView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="fill"
+                        android:animateLayoutChanges="true"
+                        android:animationCache="true"
+                        android:clickable="true"
+                        android:contextClickable="true"
+                        android:gravity="clip_horizontal|fill_horizontal|center_vertical|end"
+                        android:iconifiedByDefault="false"
+                        android:orientation="horizontal"
+                        android:scrollbarSize="0dp"
+                        android:tooltipText="@android:string/search_go">
+
+                    </SearchView>
+                </androidx.cardview.widget.CardView>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

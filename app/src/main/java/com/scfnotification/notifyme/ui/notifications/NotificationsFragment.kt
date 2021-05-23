@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -14,12 +15,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scfnotification.notifyme.R
 import com.scfnotification.notifyme.data.adapters.NotificationAdapter
 import com.scfnotification.notifyme.data.entities.CoinAndNotification
+import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
+import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
 
 class NotificationsFragment : Fragment() {
 
     private lateinit var notificationsViewModel: NotificationsViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NotificationAdapter
+    private val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(this.requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +36,13 @@ class NotificationsFragment : Fragment() {
         if (container != null) {
             currentContext = container.context
         }
+
+        val userNotifTextView : TextView = root.findViewById(R.id.userNotificationsTV)
+        val username = preferenceHelper.getUsername()
+        if (username.endsWith('s') || username.endsWith('x') || username.endsWith('z'))
+            userNotifTextView.text = "$username' Notifications"
+        else
+            userNotifTextView.text = "$username's Notifications"
 
         adapter = NotificationAdapter()
         recyclerView = root.findViewById(R.id.fragment_notification_recyclerView)

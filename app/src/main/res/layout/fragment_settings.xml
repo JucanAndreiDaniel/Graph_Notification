@@ -30,7 +30,7 @@
                     android:id="@+id/welcomeUserTV"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="6sp"
+                    android:layout_marginStart="8sp"
                     android:gravity="center_vertical"
                     android:text="@string/userWelcome"
                     android:textColor="@color/white"
