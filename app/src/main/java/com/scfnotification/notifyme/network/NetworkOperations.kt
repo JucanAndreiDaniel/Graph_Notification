@@ -14,7 +14,7 @@ import java.util.concurrent.CountDownLatch
 
 class NetworkOperations {
 
-    fun getcoins(APIKEY: String): List<CryptoCoinValueItem> {
+    fun getCoins(APIKEY: String): List<CryptoCoinValueItem> {
 
         val countDownLatch = CountDownLatch(1)
         val apiInterface = ApiInterface.create().getCoins("Token $APIKEY")
@@ -36,6 +36,34 @@ class NetworkOperations {
         })
         countDownLatch.await()
         return responseBody
+    }
+
+    fun changeEnabled(APIKEY: String, coin_id: String, state: Boolean) {
+        val apiInterface = ApiInterface.create().enableNotification("Token $APIKEY", coin_id, state)
+        apiInterface.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>?,
+                response: Response<Boolean>?
+            ) {
+            }
+
+            override fun onFailure(call: Call<Boolean>?, t: Throwable?) {
+            }
+        })
+    }
+
+    fun deleteNotification(APIKEY: String, coin_id: String) {
+        val apiInterface = ApiInterface.create().deleteNotification("Token $APIKEY", coin_id)
+        apiInterface.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>?,
+                response: Response<Boolean>?
+            ) {
+            }
+
+            override fun onFailure(call: Call<Boolean>?, t: Throwable?) {
+            }
+        })
     }
 
     fun setNotification(
@@ -125,27 +153,18 @@ class NetworkOperations {
         return responseBody
     }
 
-    fun addFavorite(coinID: String, APIKEY: String): Boolean {
-        val countDownLatch = CountDownLatch(1)
-        var result = false
+    fun addFavorite(coinID: String, APIKEY: String) {
         val apiInterface = ApiInterface.create().addFavorite("Token $APIKEY", coinID)
         apiInterface.enqueue(object : Callback<Boolean> {
             override fun onResponse(
                 call: Call<Boolean>?,
                 response: Response<Boolean>?
             ) {
-                if (response!!.isSuccessful) {
-                    result = true
-                }
-                countDownLatch.countDown()
             }
 
             override fun onFailure(call: Call<Boolean>?, t: Throwable?) {
-                countDownLatch.countDown()
             }
         })
-        countDownLatch.await()
-        return result
     }
 
     fun login(username: String, password: String): String? {

@@ -1,12 +1,23 @@
 package com.scfnotification.notifyme.data.adapters
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.scfnotification.notifyme.R
 import com.scfnotification.notifyme.data.entities.CoinAndNotification
+import com.scfnotification.notifyme.data.entities.Notification
+import com.scfnotification.notifyme.data.repositories.Repository
+import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
+import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
 import com.scfnotification.notifyme.databinding.NotificationRowLayoutBinding
+import com.scfnotification.notifyme.network.NetworkOperations
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
 class NotificationAdapter :
@@ -49,6 +60,53 @@ class NotificationAdapter :
     class NotificationViewHolder(
         private val binding: NotificationRowLayoutBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(binding.switch1.context) }
+            binding.switch1.setOnClickListener {
+                binding.coinandnotification?.let { it1 ->
+                    NetworkOperations().changeEnabled(
+                        preferenceHelper.getApiKey(),
+                        it1.coin.id,
+                        !it1.notification.enabled
+                    )
+                    it1.notification.enabled = !it1.notification.enabled
+                }
+            }
+            binding.deleteNotification.setOnClickListener {
+                binding.coinandnotification?.let { it1 ->
+                    val builder =
+                        AlertDialog.Builder(
+                            binding.deleteNotification.context,
+                            R.style.AlertDialogCustom
+                        )
+                    builder.setTitle("Delete Notification")
+                    builder.setMessage("Do you want to delete " + it1.coin.name + " notification?")
+
+                    builder.setPositiveButton("Yes") { _, _ ->
+                        NetworkOperations().deleteNotification(
+                            preferenceHelper.getApiKey(),
+                            it1.coin.id
+                        )
+                        runBlocking {
+                            deleteNoti(
+                                binding.deleteNotification.context,
+                                it1.notification
+                            )
+                        }
+                    }
+
+                    builder.setNegativeButton("No") { _, _ ->
+                    }
+                    builder.show()
+                }
+            }
+        }
+
+        suspend fun deleteNoti(context: Context, notification: Notification) {
+            withContext(Dispatchers.IO) {
+                Repository.deleteNotifications(context, notification)
+            }
+        }
 
         fun bind(item: CoinAndNotification) {
             binding.apply {

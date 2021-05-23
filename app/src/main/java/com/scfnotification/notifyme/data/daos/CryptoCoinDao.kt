@@ -1,7 +1,7 @@
 package com.scfnotification.notifyme.data.daos
 
 import androidx.lifecycle.LiveData
-import androidx.room.* // ktlint-disable no-wildcard-imports
+import androidx.room.*
 import com.scfnotification.notifyme.data.entities.CryptoCoin
 import kotlinx.coroutines.flow.Flow
 

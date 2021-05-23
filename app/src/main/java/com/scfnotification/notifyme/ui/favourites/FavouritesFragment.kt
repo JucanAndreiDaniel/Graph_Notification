@@ -37,7 +37,7 @@ class FavouritesFragment : Fragment() {
         binding.favRecycler.adapter = adapter
         binding.favRecycler.layoutManager = LinearLayoutManager(context)
 
-        val userFavTextView : TextView = binding.root.findViewById(R.id.userFavoritesTV)
+        val userFavTextView: TextView = binding.root.findViewById(R.id.userFavoritesTV)
         val username = preferenceHelper.getUsername()
         if (username.endsWith('s') || username.endsWith('x') || username.endsWith('z'))
             userFavTextView.text = "$username' Favorites"

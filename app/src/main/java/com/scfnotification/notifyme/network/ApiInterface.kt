@@ -9,17 +9,30 @@ import retrofit2.http.*
 interface ApiInterface {
 
     @GET("coins/")
-    fun getCoins(@Header("Authorization") token: String): Call<List<CryptoCoinValueItem>>
+    fun getCoins(
+        @Header("Authorization") token: String
+    ): Call<List<CryptoCoinValueItem>>
 
     @GET("notifications/")
-    fun getNotifications(@Header("Authorization") token: String): Call<List<Notification>>
+    fun getNotifications(
+        @Header("Authorization") token: String
+    ): Call<List<Notification>>
 
     @GET("favorites/")
-    fun getFavorites(@Header("Authorization") token: String): Call<List<CryptoCoinValueItem>>
+    fun getFavorites(
+        @Header("Authorization") token: String
+    ): Call<List<CryptoCoinValueItem>>
 
     @FormUrlEncoded
-    @POST("addFav/")
+    @POST("favorites/add")
     fun addFavorite(
+        @Header("Authorization") token: String,
+        @Field("crypto_id") crypto_id: String
+    ): Call<Boolean>
+
+    @FormUrlEncoded
+    @POST("favorites/delete")
+    fun deleteFavorite(
         @Header("Authorization") token: String,
         @Field("crypto_id") crypto_id: String
     ): Call<Boolean>
@@ -34,20 +47,35 @@ interface ApiInterface {
         @Field("type") type: String
     ): Call<Boolean>
 
-    @GET("coin/{id}")
+    @GET("coins/{id}")
     fun getCoin(
         @Header("Authorization") token: String,
         @Path("name") name: String
     ): Call<CryptoCoinValueItem>
 
     @FormUrlEncoded
-    @POST("createNotificationApi")
+    @POST("notifications/create")
     fun addNotification(
         @Header("Authorization") token: String,
-        @Field("optionCrypto") coin_id: String,
+        @Field("crypto_id") coin_id: String,
         @Field("option") value_type: String,
         @Field("value") final_value: Double,
         @Field("viamail") via_mail: Boolean,
+    ): Call<Boolean>
+
+    @FormUrlEncoded
+    @POST("notifications/delete")
+    fun deleteNotification(
+        @Header("Authorization") token: String,
+        @Field("crypto_id") crypto_id: String
+    ): Call<Boolean>
+
+    @FormUrlEncoded
+    @POST("notifications/change")
+    fun enableNotification(
+        @Header("Authorization") token: String,
+        @Field("crypto_id") crypto_id: String,
+        @Field("state") state: Boolean
     ): Call<Boolean>
 
     companion object {

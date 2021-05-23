@@ -1,5 +1,6 @@
 package com.scfnotification.notifyme.ui.notifications
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +18,10 @@ import com.scfnotification.notifyme.data.adapters.NotificationAdapter
 import com.scfnotification.notifyme.data.entities.CoinAndNotification
 import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
 import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
+@AndroidEntryPoint
 class NotificationsFragment : Fragment() {
 
     private lateinit var notificationsViewModel: NotificationsViewModel
@@ -25,6 +29,7 @@ class NotificationsFragment : Fragment() {
     private lateinit var adapter: NotificationAdapter
     private val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(this.requireContext()) }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,7 +42,7 @@ class NotificationsFragment : Fragment() {
             currentContext = container.context
         }
 
-        val userNotifTextView : TextView = root.findViewById(R.id.userNotificationsTV)
+        val userNotifTextView: TextView = root.findViewById(R.id.userNotificationsTV)
         val username = preferenceHelper.getUsername()
         if (username.endsWith('s') || username.endsWith('x') || username.endsWith('z'))
             userNotifTextView.text = "$username' Notifications"
@@ -49,14 +54,31 @@ class NotificationsFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(currentContext)
         showNotifications(adapter, currentContext)
+        val nameList: MutableList<String> = mutableListOf()
+        notificationsViewModel.getNames().observe(
+            viewLifecycleOwner,
+            {
+                if (it != null) {
+                    for (item in it) {
+                        nameList += item.coin.id.replaceFirstChar { it1 ->
+                            if (it1.isLowerCase()) it1.titlecase(
+                                Locale.ENGLISH
+                            ) else it1.toString()
+                        }
+                    }
+                }
+            }
+        )
         val button: Button = root.findViewById(R.id.fragment_notification_addNotification)
-        button.setOnClickListener { showDialog() }
+        button.setOnClickListener { showDialog(nameList) }
         return root
     }
 
-    private fun showDialog() {
+    private fun showDialog(nameList: List<String>) {
         val directions =
-            NotificationsFragmentDirections.actionNavigationNotificationsToCreateNotificationDialog()
+            NotificationsFragmentDirections.actionNavigationNotificationsToCreateNotificationDialog(
+                nameList.toTypedArray()
+            )
         view?.findNavController()?.navigate(directions)
     }
 

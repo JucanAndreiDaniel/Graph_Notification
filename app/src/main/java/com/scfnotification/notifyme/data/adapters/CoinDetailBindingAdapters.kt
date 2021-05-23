@@ -17,6 +17,7 @@
 package com.scfnotification.notifyme.data.adapters
 
 import android.widget.ImageView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -40,4 +41,9 @@ fun bindIsFabGone(view: FloatingActionButton, isGone: Boolean?) {
     } else {
         view.show()
     }
+}
+
+@BindingAdapter("isChecked")
+fun bindIsChecked(view: SwitchCompat, isChecked: Boolean?) {
+    view.isChecked = isChecked == null || isChecked
 }

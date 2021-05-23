@@ -52,5 +52,9 @@
     <dialog
         android:id="@+id/createNotificationDialog"
         android:name="com.scfnotification.notifyme.ui.notifications.CreateNotificationDialog"
-        android:label="CreateNotificationDialog" />
+        android:label="CreateNotificationDialog" >
+        <argument
+            android:name="nameList"
+            app:argType="string[]" />
+    </dialog>
 </navigation>

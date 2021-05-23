@@ -19,8 +19,9 @@ import javax.inject.Singleton
 class Repository @Inject constructor(
     private val coinWithValues: CoinWithValuesDao
 ) {
-
     fun getFavorites() = coinWithValues.getFavorites(true)
+
+    fun getCoinByName(name: String) = coinWithValues.getCoinByName(name)
 
     fun getFav(string: String) = coinWithValues.getFavorite(string)
 
@@ -69,6 +70,11 @@ class Repository @Inject constructor(
             return coinDatabase!!.CoinAndNotificationDao().all()
         }
 
+        fun deleteNotifications(context: Context, notification: Notification) {
+            coinDatabase = initializeDB(context)
+            return coinDatabase!!.NotificationDao().delete(notification)
+        }
+
         fun updateNotifications(context: Context) {
             val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(context) }
             val data: List<Notification> =
@@ -82,7 +88,7 @@ class Repository @Inject constructor(
             val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(context) }
             coinDatabase = initializeDB(context)
             val data: List<CryptoCoinValueItem> =
-                NetworkOperations().getcoins(preferenceHelper.getApiKey())
+                NetworkOperations().getCoins(preferenceHelper.getApiKey())
             val coins: MutableList<CryptoCoin> = mutableListOf()
             val values: MutableList<CoinValue> = mutableListOf()
             for (item in data) {
