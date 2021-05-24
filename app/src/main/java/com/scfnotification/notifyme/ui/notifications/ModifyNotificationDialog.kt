@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.scfnotification.notifyme.R
 import com.scfnotification.notifyme.data.entities.Notification
+import com.scfnotification.notifyme.databinding.DialogModifynotificationBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,28 +22,32 @@ class ModifyNotificationDialog : DialogFragment() {
     private lateinit var notificationsViewModel: NotificationsViewModel
     private lateinit var optionsCardView: CardView
     private lateinit var coinCardView: CardView
+    private lateinit var binding: DialogModifynotificationBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         isCancelable = true
-        val root = inflater.inflate(R.layout.dialog_createnotification, container, false)
+        val args: ModifyNotificationDialogArgs by navArgs()
+        binding = DialogModifynotificationBinding.inflate(inflater, container, false)
         notificationsViewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
-        val button: Button = root.findViewById(R.id.save_notification)
+        val button: Button = binding.saveNotification
 
-        optionsCardView = root.findViewById(R.id.value_type_cv)
-        coinCardView = root.findViewById(R.id.coin_cv)
+        optionsCardView = binding.valueTypeCv
+        coinCardView = binding.coinCv
 
         optionsCardView.setOnClickListener {
             showOptionMenu(optionsCardView)
         }
+        val coin: TextView = binding.cnCoin
+        val option: TextView = binding.cnValueType
 
+        coin.text = args.coinId
+        option.text = args.valueType
         button.setOnClickListener {
-            val coin: TextView = root.findViewById(R.id.cn_coin)
-            val option: TextView = root.findViewById(R.id.cn_value_type)
-            val value: EditText = root.findViewById(R.id.cn_value)
+            val value: EditText = binding.cnValue
             val doubleValue = value.text.toString().toDouble()
             val coinId = coin.text.toString().lowercase()
             val notification = Notification(
@@ -57,22 +62,13 @@ class ModifyNotificationDialog : DialogFragment() {
             context?.let { it1 -> notificationsViewModel.setNotification(notification, it1) }
             dismiss()
         }
-        return root
+        return binding.root
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setStyle(STYLE_NO_TITLE, R.style.AlertDialogCustom)
         return dialog
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        button.setOnClickListener {
-//            callbackListener.onDataReceived(editText.text.toString())
-//            dismiss()
-//        }
     }
 
     private fun showOptionMenu(view: View) {

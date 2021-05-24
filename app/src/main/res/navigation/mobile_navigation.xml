@@ -63,5 +63,15 @@
     <dialog
         android:id="@+id/modifyNotificationDialog"
         android:name="com.scfnotification.notifyme.ui.notifications.ModifyNotificationDialog"
-        android:label="ModifyNotificationDialog" />
+        android:label="ModifyNotificationDialog" >
+        <argument
+            android:name="coinId"
+            app:argType="string" />
+        <argument
+            android:name="value_type"
+            app:argType="string" />
+        <argument
+            android:name="value"
+            app:argType="long" />
+    </dialog>
 </navigation>

@@ -84,10 +84,6 @@ class NotificationsFragment : Fragment() {
         view?.findNavController()?.navigate(directions)
     }
 
-    private fun showEditDialog(nameList: List<String>) {
-
-    }
-
     private fun showNotifications(adapter: NotificationAdapter, context: Context) {
         notificationsViewModel.getNotification(context).observe(
             viewLifecycleOwner,
