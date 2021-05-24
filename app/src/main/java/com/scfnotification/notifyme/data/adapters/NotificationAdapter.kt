@@ -72,7 +72,7 @@ class NotificationAdapter :
 
             binding.clickableNotificationCard.setOnClickListener {
                 val activeFragment: Fragment = FragmentManager.findFragment(it)
-                val direction = NotificationsFragmentDirections.actionNavigationNotificationsToModifyNotificationDialog2()
+                val direction = NotificationsFragmentDirections.actionNavigationNotificationsToModifyNotificationDialog()
                 it.findNavController().navigate(direction)
             }
 
