@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -54,6 +55,7 @@ class NotificationsFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(currentContext)
         showNotifications(adapter, currentContext)
+
         val nameList: MutableList<String> = mutableListOf()
         notificationsViewModel.getNames().observe(
             viewLifecycleOwner,
@@ -80,6 +82,10 @@ class NotificationsFragment : Fragment() {
                 nameList.toTypedArray()
             )
         view?.findNavController()?.navigate(directions)
+    }
+
+    private fun showEditDialog(nameList: List<String>) {
+
     }
 
     private fun showNotifications(adapter: NotificationAdapter, context: Context) {

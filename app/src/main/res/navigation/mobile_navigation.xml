@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_navigation_notifications_to_createNotificationDialog"
             app:destination="@id/createNotificationDialog" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_modifyNotificationDialog"
+            app:destination="@id/modifyNotificationDialog" />
     </fragment>
     <fragment
         android:id="@+id/navigation_settings"
@@ -57,4 +60,8 @@
             android:name="nameList"
             app:argType="string[]" />
     </dialog>
+    <dialog
+        android:id="@+id/modifyNotificationDialog"
+        android:name="com.scfnotification.notifyme.ui.notifications.ModifyNotificationDialog"
+        android:label="ModifyNotificationDialog" />
 </navigation>

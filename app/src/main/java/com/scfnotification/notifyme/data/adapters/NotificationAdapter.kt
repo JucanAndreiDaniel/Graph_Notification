@@ -4,6 +4,9 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +18,10 @@ import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
 import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
 import com.scfnotification.notifyme.databinding.NotificationRowLayoutBinding
 import com.scfnotification.notifyme.network.NetworkOperations
+import com.scfnotification.notifyme.ui.notifications.CreateNotificationDialog
+import com.scfnotification.notifyme.ui.notifications.ModifyNotificationDialog
+import com.scfnotification.notifyme.ui.notifications.NotificationsFragment
+import com.scfnotification.notifyme.ui.notifications.NotificationsFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -62,6 +69,13 @@ class NotificationAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(binding.switch1.context) }
+
+            binding.clickableNotificationCard.setOnClickListener {
+                val activeFragment: Fragment = FragmentManager.findFragment(it)
+                val direction = NotificationsFragmentDirections.actionNavigationNotificationsToModifyNotificationDialog2()
+                it.findNavController().navigate(direction)
+            }
+
             binding.switch1.setOnClickListener {
                 binding.coinandnotification?.let { it1 ->
                     NetworkOperations().changeEnabled(

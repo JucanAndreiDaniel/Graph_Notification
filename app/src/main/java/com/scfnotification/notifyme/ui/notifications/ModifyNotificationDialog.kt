@@ -16,7 +16,7 @@ import com.scfnotification.notifyme.data.entities.Notification
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateNotificationDialog : DialogFragment() {
+class ModifyNotificationDialog : DialogFragment() {
 
     private lateinit var notificationsViewModel: NotificationsViewModel
     private lateinit var optionsCardView: CardView
@@ -28,16 +28,12 @@ class CreateNotificationDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         isCancelable = true
-        val args: CreateNotificationDialogArgs by navArgs()
-        val nameList: List<String> = args.nameList.toList()
         val root = inflater.inflate(R.layout.dialog_createnotification, container, false)
         notificationsViewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
         val button: Button = root.findViewById(R.id.save_notification)
 
         optionsCardView = root.findViewById(R.id.value_type_cv)
         coinCardView = root.findViewById(R.id.coin_cv)
-
-        coinCardView.setOnClickListener { showCoinmenu(coinCardView, nameList) }
 
         optionsCardView.setOnClickListener {
             showOptionMenu(optionsCardView)
@@ -79,23 +75,6 @@ class CreateNotificationDialog : DialogFragment() {
 //        }
     }
 
-    private fun showCoinmenu(view: View, nameList: List<String>) {
-        val contextStyle = ContextThemeWrapper(this.context, R.style.popupMenuStyle)
-        val popupMenu = PopupMenu(contextStyle, view)
-        for (name in nameList) {
-            popupMenu.menu.add(name)
-        }
-
-        val coin: TextView = view.findViewById(R.id.cn_coin)
-        popupMenu.show()
-        popupMenu.setOnMenuItemClickListener { item: MenuItem? ->
-            if (item != null) {
-                coin.text = item.title
-            }
-            true
-        }
-    }
-
     private fun showOptionMenu(view: View) {
 
         val contextStyle = ContextThemeWrapper(this.context, R.style.popupMenuStyle)
@@ -116,14 +95,6 @@ class CreateNotificationDialog : DialogFragment() {
 
                 R.id.val_equal -> {
                     option.text = "Value Equal to"
-                }
-
-                R.id.val_g_perc -> {
-                    option.text = "Growth in Percentage"
-                }
-
-                R.id.val_d_perc -> {
-                    option.text = "Decrease in percentage"
                 }
             }
 

@@ -34,8 +34,8 @@ class SettingsFragment : Fragment() {
         logoutButton = root.findViewById(R.id.logoutButton)
         logoutButton.setOnClickListener { logout() }
 
-        notificationCardView = root.findViewById(R.id.notificationSettingCardView)
-        notificationCardView.setOnClickListener { showNotificationSettingMenu(notificationCardView) }
+//        notificationCardView = root.findViewById(R.id.notificationSettingCardView)
+//        notificationCardView.setOnClickListener { showNotificationSettingMenu(notificationCardView) }
 
         return root
     }
@@ -46,63 +46,63 @@ class SettingsFragment : Fragment() {
         startActivity(Intent(this.context, LoginActivity::class.java))
     }
 
-    private fun showNotificationSettingMenu(view: View) {
-
-        val contextStyle = ContextThemeWrapper(this.context, R.style.popupMenuStyle)
-        val popupMenu = PopupMenu(contextStyle, view)
-        popupMenu.inflate(R.menu.notifications_frequency_menu)
-        popupMenu.show()
-
-        popupMenu.setOnMenuItemClickListener { item: MenuItem? ->
-
-            when (item!!.itemId) {
-                R.id.five_minutes -> {
-                    preferenceHelper.setNotificationFrequency(5)
-                    Toast.makeText(
-                        activity?.applicationContext,
-                        "Notification Frequency set to 5 minutes",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                R.id.ten_minutes -> {
-                    preferenceHelper.setNotificationFrequency(10)
-                    Toast.makeText(
-                        activity?.applicationContext,
-                        "Notification Frequency set to 10 minutes",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                R.id.fifteen_minutes -> {
-                    preferenceHelper.setNotificationFrequency(15)
-                    Toast.makeText(
-                        activity?.applicationContext,
-                        "Notification Frequency set to 15 minutes",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                R.id.thirty_minutes -> {
-                    preferenceHelper.setNotificationFrequency(30)
-                    Toast.makeText(
-                        activity?.applicationContext,
-                        "Notification Frequency set to 30 minutes",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                R.id.sixty_minutes -> {
-                    preferenceHelper.setNotificationFrequency(60)
-                    Toast.makeText(
-                        activity?.applicationContext,
-                        "Notification Frequency set to 60 minutes",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-
-            true
-        }
-    }
+//    private fun showNotificationSettingMenu(view: View) {
+//
+//        val contextStyle = ContextThemeWrapper(this.context, R.style.popupMenuStyle)
+//        val popupMenu = PopupMenu(contextStyle, view)
+//        popupMenu.inflate(R.menu.notifications_frequency_menu)
+//        popupMenu.show()
+//
+//        popupMenu.setOnMenuItemClickListener { item: MenuItem? ->
+//
+//            when (item!!.itemId) {
+//                R.id.five_minutes -> {
+//                    preferenceHelper.setNotificationFrequency(5)
+//                    Toast.makeText(
+//                        activity?.applicationContext,
+//                        "Notification Frequency set to 5 minutes",
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                }
+//
+//                R.id.ten_minutes -> {
+//                    preferenceHelper.setNotificationFrequency(10)
+//                    Toast.makeText(
+//                        activity?.applicationContext,
+//                        "Notification Frequency set to 10 minutes",
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                }
+//
+//                R.id.fifteen_minutes -> {
+//                    preferenceHelper.setNotificationFrequency(15)
+//                    Toast.makeText(
+//                        activity?.applicationContext,
+//                        "Notification Frequency set to 15 minutes",
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                }
+//
+//                R.id.thirty_minutes -> {
+//                    preferenceHelper.setNotificationFrequency(30)
+//                    Toast.makeText(
+//                        activity?.applicationContext,
+//                        "Notification Frequency set to 30 minutes",
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                }
+//
+//                R.id.sixty_minutes -> {
+//                    preferenceHelper.setNotificationFrequency(60)
+//                    Toast.makeText(
+//                        activity?.applicationContext,
+//                        "Notification Frequency set to 60 minutes",
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                }
+//            }
+//
+//            true
+//        }
+//    }
 }
