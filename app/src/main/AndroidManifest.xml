@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SCFNotification">
         <activity
-            android:name="com.scfnotification.notifyme.ui.login.LoginActivity"
+            android:name="com.scfnotification.notifyme.ui.activities.SplashActivity"
             android:label="NotifyMe">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.scfnotification.notifyme.ui.main.MainActivity" />
+        <activity android:name="com.scfnotification.notifyme.ui.activities.LoginActivity" />
+        <activity android:name="com.scfnotification.notifyme.ui.activities.MainActivity" />
 
         <service
             android:name="com.scfnotification.notifyme.network.BaseFirebaseMessagingService"

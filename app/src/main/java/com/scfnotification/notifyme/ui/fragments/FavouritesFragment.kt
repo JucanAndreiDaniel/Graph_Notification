@@ -1,4 +1,4 @@
-package com.scfnotification.notifyme.ui.favourites
+package com.scfnotification.notifyme.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -16,6 +16,7 @@ import com.scfnotification.notifyme.data.entities.CoinWithValues
 import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
 import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
 import com.scfnotification.notifyme.databinding.FragmentFavouritesBinding
+import com.scfnotification.notifyme.ui.viewmodels.FavouritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

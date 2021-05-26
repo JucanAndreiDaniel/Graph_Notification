@@ -1,4 +1,4 @@
-package com.scfnotification.notifyme.ui.home
+package com.scfnotification.notifyme.ui.viewmodels
 
 import android.content.Context
 import androidx.lifecycle.LiveData

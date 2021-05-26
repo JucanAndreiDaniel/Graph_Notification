@@ -15,7 +15,7 @@
 
         <variable
             name="viewModel"
-            type="com.scfnotification.notifyme.ui.home.HomeViewModel" />
+            type="com.scfnotification.notifyme.ui.viewmodels.HomeViewModel" />
 
         <import type="com.scfnotification.notifyme.data.adapters.CoinDetailBindingAdaptersKt" />
         <import type="com.scfnotification.notifyme.data.adapters.CoinWithValuesAdapter.CoinsViewHolder"/>

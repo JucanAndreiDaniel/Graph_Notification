@@ -1,4 +1,4 @@
-package com.scfnotification.notifyme.ui.login
+package com.scfnotification.notifyme.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,12 +6,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import com.scfnotification.notifyme.R
 import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
 import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
 import com.scfnotification.notifyme.network.NetworkOperations
-import com.scfnotification.notifyme.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,8 +30,6 @@ class LoginActivity : AppCompatActivity() {
         if (preferenceHelper.getApiKey() != "") {
             startActivity(Intent(this, MainActivity::class.java))
         }
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_login)
 
         _loginButton = this.findViewById(R.id.login)

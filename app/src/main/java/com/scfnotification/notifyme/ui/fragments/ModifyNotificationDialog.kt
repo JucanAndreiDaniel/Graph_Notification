@@ -1,4 +1,4 @@
-package com.scfnotification.notifyme.ui.notifications
+package com.scfnotification.notifyme.ui.fragments
 
 import android.app.Dialog
 import android.os.Bundle
@@ -13,40 +13,42 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.scfnotification.notifyme.R
 import com.scfnotification.notifyme.data.entities.Notification
+import com.scfnotification.notifyme.databinding.DialogModifynotificationBinding
+import com.scfnotification.notifyme.ui.viewmodels.NotificationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateNotificationDialog : DialogFragment() {
+class ModifyNotificationDialog : DialogFragment() {
 
     private lateinit var notificationsViewModel: NotificationsViewModel
     private lateinit var optionsCardView: CardView
     private lateinit var coinCardView: CardView
+    private lateinit var binding: DialogModifynotificationBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         isCancelable = true
-        val args: CreateNotificationDialogArgs by navArgs()
-        val nameList: List<String> = args.nameList.toList()
-        val root = inflater.inflate(R.layout.dialog_createnotification, container, false)
+        val args: ModifyNotificationDialogArgs by navArgs()
+        binding = DialogModifynotificationBinding.inflate(inflater, container, false)
         notificationsViewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
-        val button: Button = root.findViewById(R.id.save_notification)
+        val button: Button = binding.saveNotification
 
-        optionsCardView = root.findViewById(R.id.value_type_cv)
-        coinCardView = root.findViewById(R.id.coin_cv)
-
-        coinCardView.setOnClickListener { showCoinmenu(coinCardView, nameList) }
+        optionsCardView = binding.valueTypeCv
+        coinCardView = binding.coinCv
 
         optionsCardView.setOnClickListener {
             showOptionMenu(optionsCardView)
         }
+        val coin: TextView = binding.cnCoin
+        val option: TextView = binding.cnValueType
 
+        coin.text = args.coinId
+        option.text = args.valueType
         button.setOnClickListener {
-            val coin: TextView = root.findViewById(R.id.cn_coin)
-            val option: TextView = root.findViewById(R.id.cn_value_type)
-            val value: EditText = root.findViewById(R.id.cn_value)
+            val value: EditText = binding.cnValue
             val doubleValue = value.text.toString().toDouble()
             val coinId = coin.text.toString().lowercase()
             val notification = Notification(
@@ -61,39 +63,13 @@ class CreateNotificationDialog : DialogFragment() {
             context?.let { it1 -> notificationsViewModel.setNotification(notification, it1) }
             dismiss()
         }
-        return root
+        return binding.root
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setStyle(STYLE_NO_TITLE, R.style.AlertDialogCustom)
         return dialog
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        button.setOnClickListener {
-//            callbackListener.onDataReceived(editText.text.toString())
-//            dismiss()
-//        }
-    }
-
-    private fun showCoinmenu(view: View, nameList: List<String>) {
-        val contextStyle = ContextThemeWrapper(this.context, R.style.popupMenuStyle)
-        val popupMenu = PopupMenu(contextStyle, view)
-        for (name in nameList) {
-            popupMenu.menu.add(name)
-        }
-
-        val coin: TextView = view.findViewById(R.id.cn_coin)
-        popupMenu.show()
-        popupMenu.setOnMenuItemClickListener { item: MenuItem? ->
-            if (item != null) {
-                coin.text = item.title
-            }
-            true
-        }
     }
 
     private fun showOptionMenu(view: View) {
@@ -116,14 +92,6 @@ class CreateNotificationDialog : DialogFragment() {
 
                 R.id.val_equal -> {
                     option.text = "Value Equal to"
-                }
-
-                R.id.val_g_perc -> {
-                    option.text = "Growth in Percentage"
-                }
-
-                R.id.val_d_perc -> {
-                    option.text = "Decrease in percentage"
                 }
             }
 

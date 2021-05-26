@@ -1,4 +1,4 @@
-package com.scfnotification.notifyme.ui.details
+package com.scfnotification.notifyme.ui.viewmodels
 
 import android.content.Context
 import android.util.Log

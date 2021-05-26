@@ -1,4 +1,4 @@
-package com.scfnotification.notifyme.ui.details
+package com.scfnotification.notifyme.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -16,8 +16,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.scfnotification.notifyme.R
 import com.scfnotification.notifyme.data.entities.CoinWithValues
 import com.scfnotification.notifyme.databinding.FragmentDetailBinding
-import com.scfnotification.notifyme.ui.details.DetailFragment.Callback
-import com.scfnotification.notifyme.ui.main.MainActivity
+import com.scfnotification.notifyme.ui.activities.MainActivity
+import com.scfnotification.notifyme.ui.fragments.DetailFragment.Callback
+import com.scfnotification.notifyme.ui.viewmodels.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

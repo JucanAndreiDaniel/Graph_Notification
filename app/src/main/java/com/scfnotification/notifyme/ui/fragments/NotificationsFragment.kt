@@ -1,4 +1,4 @@
-package com.scfnotification.notifyme.ui.notifications
+package com.scfnotification.notifyme.ui.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -19,6 +18,7 @@ import com.scfnotification.notifyme.data.adapters.NotificationAdapter
 import com.scfnotification.notifyme.data.entities.CoinAndNotification
 import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
 import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
+import com.scfnotification.notifyme.ui.viewmodels.NotificationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 

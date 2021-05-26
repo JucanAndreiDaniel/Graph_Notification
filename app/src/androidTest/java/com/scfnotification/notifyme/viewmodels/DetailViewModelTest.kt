@@ -23,7 +23,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.scfnotification.notifyme.MainCoroutineRule
 import com.scfnotification.notifyme.data.AppDatabase
 import com.scfnotification.notifyme.data.repositories.Repository
-import com.scfnotification.notifyme.ui.details.DetailViewModel
+import com.scfnotification.notifyme.ui.viewmodels.DetailViewModel
 import com.scfnotification.notifyme.utilities.testPlant
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

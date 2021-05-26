@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.scfnotification.notifyme.data.entities.CoinWithValues
 import com.scfnotification.notifyme.databinding.RowLayoutBinding
-import com.scfnotification.notifyme.ui.favourites.FavouritesFragmentDirections
-import com.scfnotification.notifyme.ui.home.HomeFragment
-import com.scfnotification.notifyme.ui.home.HomeFragmentDirections
+import com.scfnotification.notifyme.ui.fragments.FavouritesFragmentDirections
+import com.scfnotification.notifyme.ui.fragments.HomeFragment
+import com.scfnotification.notifyme.ui.fragments.HomeFragmentDirections
 import java.math.BigDecimal
 
 class CoinWithValuesAdapter :

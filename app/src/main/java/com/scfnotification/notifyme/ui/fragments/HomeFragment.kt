@@ -1,4 +1,4 @@
-package com.scfnotification.notifyme.ui.home
+package com.scfnotification.notifyme.ui.fragments
 
 import android.content.Context
 import android.graphics.Color
@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.scfnotification.notifyme.R
 import com.scfnotification.notifyme.data.adapters.CoinWithValuesAdapter
 import com.scfnotification.notifyme.data.entities.CoinWithValues
+import com.scfnotification.notifyme.ui.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -90,7 +91,7 @@ class HomeFragment : Fragment() {
         })
 
         swipeView = root.findViewById(R.id.homeRefreshLayout)
-        recyclerView.isNestedScrollingEnabled = false;
+        recyclerView.isNestedScrollingEnabled = false
 //        swipeView.isRefreshing = false
         swipeView.setProgressBackgroundColorSchemeColor(
             ContextCompat.getColor(

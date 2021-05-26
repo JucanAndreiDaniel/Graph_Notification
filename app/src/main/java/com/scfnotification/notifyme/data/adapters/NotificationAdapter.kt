@@ -16,7 +16,7 @@ import com.scfnotification.notifyme.data.sharedpreferences.IPreferenceHelper
 import com.scfnotification.notifyme.data.sharedpreferences.PreferenceManager
 import com.scfnotification.notifyme.databinding.NotificationRowLayoutBinding
 import com.scfnotification.notifyme.network.NetworkOperations
-import com.scfnotification.notifyme.ui.notifications.NotificationsFragmentDirections
+import com.scfnotification.notifyme.ui.fragments.NotificationsFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
