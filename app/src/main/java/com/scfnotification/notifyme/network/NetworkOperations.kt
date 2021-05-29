@@ -153,6 +153,20 @@ class NetworkOperations {
         return responseBody
     }
 
+    fun removeFavorite(coinID: String, APIKEY: String) {
+        val apiInterface = ApiInterface.create().deleteFavorite("Token $APIKEY", coinID)
+        apiInterface.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>?,
+                response: Response<Boolean>?
+            ) {
+            }
+
+            override fun onFailure(call: Call<Boolean>?, t: Throwable?) {
+            }
+        })
+    }
+
     fun addFavorite(coinID: String, APIKEY: String) {
         val apiInterface = ApiInterface.create().addFavorite("Token $APIKEY", coinID)
         apiInterface.enqueue(object : Callback<Boolean> {

@@ -33,8 +33,8 @@ interface CoinWithValuesDao {
     fun getCoinByName(name: String): Flow<CoinWithValues>
 
     @Transaction
-    @Query("UPDATE cryptoCoins SET favorite = 1 WHERE id =:coinId")
-    fun setFav(coinId: String)
+    @Query("UPDATE cryptoCoins SET favorite =:fav WHERE id =:coinId")
+    fun setFav(coinId: String, fav: Int = 1)
 
     @Transaction
     @Query("SELECT EXISTS(SELECT 1 FROM cryptoCoins where id=:coinId AND favorite = 1 LIMIT 1)")

@@ -40,7 +40,8 @@ class DetailFragment : Fragment() {
             viewModel = detailViewModel
             lifecycleOwner = viewLifecycleOwner
             callback = Callback {
-                hideAppBarFab(fab)
+                hideAppBarFab(fabAddFav)
+                showAppBarFab(removeFav)
                 Log.d("Callback", "add $it to fav")
                 detailViewModel.favorite(it.coin.id, requireContext())
                 Snackbar.make(
@@ -49,6 +50,17 @@ class DetailFragment : Fragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+            setRemoveFav { coin ->
+                hideAppBarFab(removeFav)
+                showAppBarFab(fabAddFav)
+                detailViewModel.removeFavorite(coin.coin.id, requireContext())
+                Snackbar.make(
+                    root,
+                    "Removed from favorites",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+
             var isToolbarShown = false
             detailViewModel.showFav()
 
@@ -89,6 +101,12 @@ class DetailFragment : Fragment() {
         behavior.isAutoHideEnabled = false
         fab.hide()
     }
+    private fun showAppBarFab(fab: FloatingActionButton) {
+        val params = fab.layoutParams as CoordinatorLayout.LayoutParams
+        val behavior = params.behavior as FloatingActionButton.Behavior
+        behavior.isAutoHideEnabled = false
+        fab.show()
+    }
 
     override fun onDetach() {
         super.onDetach()
@@ -97,5 +115,9 @@ class DetailFragment : Fragment() {
 
     fun interface Callback {
         fun setFav(coin: CoinWithValues)
+    }
+
+    fun interface RemoveFav {
+        fun removeFav(coin: CoinWithValues)
     }
 }

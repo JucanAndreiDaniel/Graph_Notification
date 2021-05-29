@@ -13,6 +13,10 @@
         <variable
             name="callback"
             type="com.scfnotification.notifyme.ui.fragments.DetailFragment.Callback" />
+
+        <variable
+            name="removeFav"
+            type="com.scfnotification.notifyme.ui.fragments.DetailFragment.RemoveFav" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -194,7 +198,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fab_add_fav"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -206,6 +210,21 @@
             app:layout_anchorGravity="bottom|end"
             app:shapeAppearance="@style/ShapeAppearance.FAB"
             app:srcCompat="@drawable/ic_plus"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/remove_fav"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:onClick="@{() -> removeFav.removeFav(viewModel.coin)}"
+            android:tint="@android:color/white"
+            app:isFabGone="@{!viewModel.isFav}"
+            app:layout_anchor="@id/appbar"
+            app:layout_anchorGravity="bottom|end"
+            app:shapeAppearance="@style/ShapeAppearance.FAB"
+            app:srcCompat="@drawable/ic_minus"
             tools:ignore="ContentDescription" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

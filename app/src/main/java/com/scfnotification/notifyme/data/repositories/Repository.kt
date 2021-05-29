@@ -21,8 +21,6 @@ class Repository @Inject constructor(
 ) {
     fun getFavorites() = coinWithValues.getFavorites(true)
 
-    fun getCoinByName(name: String) = coinWithValues.getCoinByName(name)
-
     fun getFav(string: String) = coinWithValues.getFavorite(string)
 
     fun getCoinDetails() = coinWithValues.getCoinslimit(100)
@@ -31,6 +29,10 @@ class Repository @Inject constructor(
 
     fun setFavorite(coinId: String) {
         coinWithValues.setFav(coinId)
+    }
+
+    fun removeFav(coinId: String) {
+        coinWithValues.setFav(coinId, 0)
     }
 
     fun updateFavorite(context: Context) {
