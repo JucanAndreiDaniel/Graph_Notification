@@ -184,7 +184,7 @@ class NetworkOperations {
     fun login(username: String, password: String): String? {
         Log.d("TAG", "Login")
 
-        val url = "https://notifyme.setrofex.tk/api/user/login"
+        val url = "https://notifyme.setrofex.tk/api/login/"
 
         val jsonObject = JSONObject()
 
@@ -230,7 +230,7 @@ class NetworkOperations {
                                         results.lastIndexOf("}") + 1
                                     )
                                 )
-                                result = jsonObj.getString("token")
+                                result = jsonObj.getString("access_token")
                                 Log.d("token:", result!!)
                             } else {
                                 throw IOException("Response not successful: $response")
