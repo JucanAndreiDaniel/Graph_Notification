@@ -13,25 +13,25 @@ interface ApiInterface {
         @Header("Authorization") token: String
     ): Call<List<CryptoCoinValueItem>>
 
-    @GET("notifications/")
+    @GET("notification/")
     fun getNotifications(
         @Header("Authorization") token: String
     ): Call<List<Notification>>
 
-    @GET("favorites/")
+    @GET("user/favorite/")
     fun getFavorites(
         @Header("Authorization") token: String
     ): Call<List<CryptoCoinValueItem>>
 
     @FormUrlEncoded
-    @POST("favorites/add")
+    @POST("user/favorite")
     fun addFavorite(
         @Header("Authorization") token: String,
         @Field("crypto_id") crypto_id: String
     ): Call<Boolean>
 
     @FormUrlEncoded
-    @POST("favorites/delete")
+    @DELETE("user/favorite/")
     fun deleteFavorite(
         @Header("Authorization") token: String,
         @Field("crypto_id") crypto_id: String
@@ -47,14 +47,14 @@ interface ApiInterface {
         @Field("type") type: String
     ): Call<Boolean>
 
-    @GET("coins/{id}")
+    @GET("coins/{id}/")
     fun getCoin(
         @Header("Authorization") token: String,
         @Path("name") name: String
     ): Call<CryptoCoinValueItem>
 
     @FormUrlEncoded
-    @POST("notifications/create")
+    @POST("notification/")
     fun addNotification(
         @Header("Authorization") token: String,
         @Field("crypto_id") coin_id: String,
@@ -64,14 +64,14 @@ interface ApiInterface {
     ): Call<Boolean>
 
     @FormUrlEncoded
-    @POST("notifications/delete")
+    @DELETE("notification/")
     fun deleteNotification(
         @Header("Authorization") token: String,
         @Field("crypto_id") crypto_id: String
     ): Call<Boolean>
 
     @FormUrlEncoded
-    @POST("notifications/change")
+    @PATCH("notification/")
     fun enableNotification(
         @Header("Authorization") token: String,
         @Field("crypto_id") crypto_id: String,
@@ -79,8 +79,7 @@ interface ApiInterface {
     ): Call<Boolean>
 
     companion object {
-
-        var BASE_URL = "https://stockcrypto.ddns.net/"
+        var BASE_URL = "https://notifyme.setrofex.tk/"
 
         fun create(): ApiInterface {
 

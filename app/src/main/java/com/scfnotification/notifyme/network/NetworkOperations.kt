@@ -184,7 +184,7 @@ class NetworkOperations {
     fun login(username: String, password: String): String? {
         Log.d("TAG", "Login")
 
-        val url = "https://stockcrypto.ddns.net/api-token-auth/"
+        val url = "https://notifyme.setrofex.tk/api/user/login"
 
         val jsonObject = JSONObject()
 
