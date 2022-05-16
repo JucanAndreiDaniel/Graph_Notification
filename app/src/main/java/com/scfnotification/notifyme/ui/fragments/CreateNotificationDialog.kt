@@ -27,12 +27,13 @@ class CreateNotificationDialog : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         isCancelable = true
         val args: CreateNotificationDialogArgs by navArgs()
         val nameList: List<String> = args.nameList.toList()
+        val coinList: List<Int> = args.coinIDList.toList()
         val root = inflater.inflate(R.layout.dialog_createnotification, container, false)
-        notificationsViewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        notificationsViewModel = ViewModelProvider(this)[NotificationsViewModel::class.java]
         val button: Button = root.findViewById(R.id.save_notification)
 
         optionsCardView = root.findViewById(R.id.value_type_cv)
@@ -49,9 +50,9 @@ class CreateNotificationDialog : DialogFragment() {
             val option: TextView = root.findViewById(R.id.cn_value_type)
             val value: EditText = root.findViewById(R.id.cn_value)
             val doubleValue = value.text.toString().toDouble()
-            val coinId = coin.text.toString().lowercase()
+            val coinID = coinList[nameList.indexOf(coin.text.toString())]
             val notification = Notification(
-                coinId,
+                coinID,
                 option.text.toString(),
                 0.0,
                 doubleValue,
@@ -70,14 +71,6 @@ class CreateNotificationDialog : DialogFragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setStyle(STYLE_NO_TITLE, R.style.AlertDialogCustom)
         return dialog
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        button.setOnClickListener {
-//            callbackListener.onDataReceived(editText.text.toString())
-//            dismiss()
-//        }
     }
 
     private fun showCoinmenu(view: View, nameList: List<String>) {

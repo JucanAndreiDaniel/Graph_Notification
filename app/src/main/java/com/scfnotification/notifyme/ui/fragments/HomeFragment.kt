@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         lateinit var currentContext: Context
 
@@ -51,21 +51,20 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(currentContext)
 
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 //        homeViewModel.update(currentContext)
         showCoins(adapter)
         homeSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     homeViewModel.filter(query).observe(
-                        viewLifecycleOwner,
-                        {
-                            if (it != null) {
-                                allCoins = false
-                                adapter.submitList(it as MutableList<CoinWithValues>?)
-                            }
+                        viewLifecycleOwner
+                    ) {
+                        if (it != null) {
+                            allCoins = false
+                            adapter.submitList(it as MutableList<CoinWithValues>?)
                         }
-                    )
+                    }
                 }
                 return false
             }
@@ -74,14 +73,13 @@ class HomeFragment : Fragment() {
 
                 if (newText != null && newText.length > 2) {
                     homeViewModel.filter(newText).observe(
-                        viewLifecycleOwner,
-                        {
-                            if (it != null) {
-                                allCoins = false
-                                adapter.submitList(it as MutableList<CoinWithValues>?)
-                            }
+                        viewLifecycleOwner
+                    ) {
+                        if (it != null) {
+                            allCoins = false
+                            adapter.submitList(it as MutableList<CoinWithValues>?)
                         }
-                    )
+                    }
                 } else {
                     if (!allCoins)
                         showCoins(adapter)
@@ -116,13 +114,12 @@ class HomeFragment : Fragment() {
     private fun showCoins(adapter: CoinWithValuesAdapter) {
         allCoins = true
         homeViewModel.getCoins.observe(
-            viewLifecycleOwner,
-            {
-                if (it != null) {
-                    adapter.submitList(it as MutableList<CoinWithValues>?)
-                }
+            viewLifecycleOwner
+        ) {
+            if (it != null) {
+                adapter.submitList(it as MutableList<CoinWithValues>?)
             }
-        )
+        }
     }
 
     override fun onResume() {

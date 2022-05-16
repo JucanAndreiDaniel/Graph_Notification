@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "notifications")
 class Notification constructor(
-    @PrimaryKey @ColumnInfo(name = "coin_id") var coin_id: String,
+    @PrimaryKey @ColumnInfo(name = "coin_id") var coin_id: Int,
     @ColumnInfo(name = "value_type") var value_type: String,
     @ColumnInfo(name = "initial_value") var initial_value: Double,
     @ColumnInfo(name = "final_value") var final_value: Double,

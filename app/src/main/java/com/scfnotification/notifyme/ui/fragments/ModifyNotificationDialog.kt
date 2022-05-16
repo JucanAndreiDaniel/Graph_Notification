@@ -33,7 +33,7 @@ class ModifyNotificationDialog : DialogFragment() {
         isCancelable = true
         val args: ModifyNotificationDialogArgs by navArgs()
         binding = DialogModifynotificationBinding.inflate(inflater, container, false)
-        notificationsViewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        notificationsViewModel = ViewModelProvider(this)[NotificationsViewModel::class.java]
         val button: Button = binding.saveNotification
 
         optionsCardView = binding.valueTypeCv
@@ -45,14 +45,13 @@ class ModifyNotificationDialog : DialogFragment() {
         val coin: TextView = binding.cnCoin
         val option: TextView = binding.cnValueType
 
-        coin.text = args.coinId
+        coin.text = args.coinName
         option.text = args.valueType
         button.setOnClickListener {
             val value: EditText = binding.cnValue
             val doubleValue = value.text.toString().toDouble()
-            val coinId = coin.text.toString().lowercase()
             val notification = Notification(
-                coinId,
+                args.coinID,
                 option.text.toString(),
                 0.0,
                 doubleValue,

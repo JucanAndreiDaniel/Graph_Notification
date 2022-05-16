@@ -31,7 +31,7 @@ class DetailViewModel @Inject constructor(
         Log.d("checkFav", isFav.value.toString())
     }
 
-    fun favorite(coinId: String, context: Context) {
+    fun favorite(coinId: Int, context: Context) {
         val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(context) }
         viewModelScope.launch(Dispatchers.IO) {
             repository.setFavorite(coinId)
@@ -39,7 +39,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun removeFavorite(coinId: String, context: Context) {
+    fun removeFavorite(coinId: Int, context: Context) {
         val preferenceHelper: IPreferenceHelper by lazy { PreferenceManager(context) }
         viewModelScope.launch(Dispatchers.IO) {
             repository.removeFav(coinId)

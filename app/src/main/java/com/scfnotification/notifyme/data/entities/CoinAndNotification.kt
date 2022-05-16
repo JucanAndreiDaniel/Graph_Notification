@@ -7,7 +7,7 @@ data class CoinAndNotification(
     @Embedded val notification: Notification,
     @Relation(
         parentColumn = "coin_id",
-        entityColumn = "id"
+        entityColumn = "coin_id"
     )
     val coin: CryptoCoin,
 )

@@ -35,9 +35,9 @@ class NotificationsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         lateinit var currentContext: Context
-        notificationsViewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        notificationsViewModel = ViewModelProvider(this)[NotificationsViewModel::class.java]
         val root = inflater.inflate(R.layout.fragment_notifications, container, false)
         if (container != null) {
             currentContext = container.context
@@ -57,41 +57,42 @@ class NotificationsFragment : Fragment() {
         showNotifications(adapter, currentContext)
 
         val nameList: MutableList<String> = mutableListOf()
+        val coinIDList: MutableList<Int> = mutableListOf()
         notificationsViewModel.getNames().observe(
-            viewLifecycleOwner,
-            {
-                if (it != null) {
-                    for (item in it) {
-                        nameList += item.coin.id.replaceFirstChar { it1 ->
-                            if (it1.isLowerCase()) it1.titlecase(
-                                Locale.ENGLISH
-                            ) else it1.toString()
-                        }
+            viewLifecycleOwner
+        ) {
+            if (it != null) {
+                for (item in it) {
+                    nameList += item.coin.coin_id.replaceFirstChar { it1 ->
+                        if (it1.isLowerCase()) it1.titlecase(
+                            Locale.ENGLISH
+                        ) else it1.toString()
                     }
+                    coinIDList += item.coin.id
                 }
             }
-        )
+        }
         val button: Button = root.findViewById(R.id.fragment_notification_addNotification)
-        button.setOnClickListener { showDialog(nameList) }
+        button.setOnClickListener { showDialog(nameList,coinIDList) }
         return root
     }
 
-    private fun showDialog(nameList: List<String>) {
+    private fun showDialog(nameList: List<String>, coinIDList: MutableList<Int>) {
         val directions =
             NotificationsFragmentDirections.actionNavigationNotificationsToCreateNotificationDialog(
-                nameList.toTypedArray()
+                nameList.toTypedArray(),
+                coinIDList.toIntArray()
             )
         view?.findNavController()?.navigate(directions)
     }
 
     private fun showNotifications(adapter: NotificationAdapter, context: Context) {
         notificationsViewModel.getNotification(context).observe(
-            viewLifecycleOwner,
-            {
-                if (it != null) {
-                    adapter.submitList(it as MutableList<CoinAndNotification>?)
-                }
+            viewLifecycleOwner
+        ) {
+            if (it != null) {
+                adapter.submitList(it as MutableList<CoinAndNotification>?)
             }
-        )
+        }
     }
 }

@@ -70,12 +70,11 @@ class FavouritesFragment : Fragment() {
         binding: FragmentFavouritesBinding
     ) {
         favouritesViewModel.getFavorites.observe(
-            viewLifecycleOwner,
-            {
-                binding.hasCoins = !it.isNullOrEmpty()
-                adapter.submitList(it as MutableList<CoinWithValues>?)
-            }
-        )
+            viewLifecycleOwner
+        ) {
+            binding.hasCoins = !it.isNullOrEmpty()
+            adapter.submitList(it as MutableList<CoinWithValues>?)
+        }
     }
 
     private fun fragmentSwitch(view: View) {

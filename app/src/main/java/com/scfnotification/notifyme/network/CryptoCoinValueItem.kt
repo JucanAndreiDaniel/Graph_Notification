@@ -1,6 +1,8 @@
 package com.scfnotification.notifyme.network
 
-data class CryptoCoinValueItem(
+data class
+CryptoCoinValueItem(
+    val id: Int,
     val ath: Double,
     val ath_time: String,
     val atl: Double,

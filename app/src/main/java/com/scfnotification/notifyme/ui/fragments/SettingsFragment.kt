@@ -23,7 +23,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
 
         usernameWelcome = root.findViewById(R.id.welcomeUserTV)

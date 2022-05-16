@@ -1,6 +1,7 @@
 package com.scfnotification.notifyme.data.repositories
 
 import android.content.Context
+import android.util.Log
 import com.scfnotification.notifyme.data.AppDatabase
 import com.scfnotification.notifyme.data.daos.CoinWithValuesDao
 import com.scfnotification.notifyme.data.entities.CoinAndNotification
@@ -27,11 +28,11 @@ class Repository @Inject constructor(
 
     fun filter(stringToFilter: String) = coinWithValues.getFilteredCoins(stringToFilter)
 
-    fun setFavorite(coinId: String) {
+    fun setFavorite(coinId: Int) {
         coinWithValues.setFav(coinId)
     }
 
-    fun removeFav(coinId: String) {
+    fun removeFav(coinId: Int) {
         coinWithValues.setFav(coinId, 0)
     }
 
@@ -40,7 +41,7 @@ class Repository @Inject constructor(
         val favs: List<CryptoCoinValueItem> =
             NetworkOperations().getFavorites(preferenceHelper.getApiKey())
         for (item in favs) {
-            setFavorite(item.coin_id)
+            setFavorite(item.id)
         }
     }
 
@@ -96,14 +97,16 @@ class Repository @Inject constructor(
             for (item in data) {
                 val coin =
                     CryptoCoin(
-                        id = item.coin_id,
+                        id = item.id,
+                        coin_id=item.coin_id,
                         name = item.name,
                         image = item.image,
                         symbol = item.symbol,
                         lastUpdated = item.last_updated,
                     )
                 val value = CoinValue(
-                    coin = item.coin_id,
+                    coin = item.id,
+                    coin_id=item.coin_id,
                     ath = item.ath,
                     atl = item.atl,
                     ath_time = item.ath_time,

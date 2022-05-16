@@ -72,7 +72,8 @@ class NotificationAdapter :
                         NotificationsFragmentDirections.actionNavigationNotificationsToModifyNotificationDialog(
                             it1.coin.name,
                             it1.notification.value_type,
-                            it1.notification.final_value.roundToLong()
+                            it1.notification.final_value.roundToLong(),
+                            it1.notification.coin_id
                         )
                     it.findNavController().navigate(direction)
                 }

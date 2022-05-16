@@ -40,7 +40,7 @@ class CoinWithValuesAdapter :
     override fun submitList(list: MutableList<CoinWithValues>?) {
         if (list != null) {
             for (element in list) {
-                if (element.coin.id != "bitcoin") {
+                if (element.coin.coin_id != "1") {
                     element.values[0].high_1d =
                         setRoundedNumber(BigDecimal.valueOf(element.values[0].high_1d)).toDouble()
                     element.values[0].current =
@@ -78,9 +78,9 @@ class CoinWithValuesAdapter :
         ) {
             val activeFragment: Fragment = FragmentManager.findFragment(view)
             val direction = if (activeFragment is HomeFragment) {
-                HomeFragmentDirections.actionNavigationHomeToNavigationDetail(coin.coin.id)
+                HomeFragmentDirections.actionNavigationHomeToNavigationDetail(coin.coin.coin_id)
             } else {
-                FavouritesFragmentDirections.actionNavigationFavouritesToNavigationDetail(coin.coin.id)
+                FavouritesFragmentDirections.actionNavigationFavouritesToNavigationDetail(coin.coin.coin_id)
             }
             view.findNavController().navigate(direction)
         }

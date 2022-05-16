@@ -34,7 +34,7 @@ interface CoinWithValuesDao {
 
     @Transaction
     @Query("UPDATE cryptoCoins SET favorite =:fav WHERE id =:coinId")
-    fun setFav(coinId: String, fav: Int = 1)
+    fun setFav(coinId: Int, fav: Int = 1)
 
     @Transaction
     @Query("SELECT EXISTS(SELECT 1 FROM cryptoCoins where id=:coinId AND favorite = 1 LIMIT 1)")

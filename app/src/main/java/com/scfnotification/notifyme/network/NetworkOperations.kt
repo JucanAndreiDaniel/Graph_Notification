@@ -17,13 +17,14 @@ class NetworkOperations {
     fun getCoins(APIKEY: String): List<CryptoCoinValueItem> {
 
         val countDownLatch = CountDownLatch(1)
-        val apiInterface = ApiInterface.create().getCoins("Token $APIKEY")
+        val apiInterface = ApiInterface.create().getCoins("Bearer $APIKEY","USD")
         var responseBody: List<CryptoCoinValueItem> = listOf()
         apiInterface.enqueue(object : Callback<List<CryptoCoinValueItem>> {
             override fun onResponse(
                 call: Call<List<CryptoCoinValueItem>>?,
                 response: Response<List<CryptoCoinValueItem>>?
             ) {
+                    Log.d("getCoins", "getCoins: $response")
                 if (response!!.isSuccessful) {
                     responseBody = response.body()!!
                 }
@@ -38,8 +39,8 @@ class NetworkOperations {
         return responseBody
     }
 
-    fun changeEnabled(APIKEY: String, coin_id: String, state: Boolean) {
-        val apiInterface = ApiInterface.create().enableNotification("Token $APIKEY", coin_id, state)
+    fun changeEnabled(APIKEY: String, id: Int, state: Boolean) {
+        val apiInterface = ApiInterface.create().enableNotification("Bearer $APIKEY", id, state)
         apiInterface.enqueue(object : Callback<Boolean> {
             override fun onResponse(
                 call: Call<Boolean>?,
@@ -52,8 +53,8 @@ class NetworkOperations {
         })
     }
 
-    fun deleteNotification(APIKEY: String, coin_id: String) {
-        val apiInterface = ApiInterface.create().deleteNotification("Token $APIKEY", coin_id)
+    fun deleteNotification(APIKEY: String, coin_id: Int) {
+        val apiInterface = ApiInterface.create().deleteNotification("Bearer $APIKEY", coin_id)
         apiInterface.enqueue(object : Callback<Boolean> {
             override fun onResponse(
                 call: Call<Boolean>?,
@@ -68,13 +69,13 @@ class NetworkOperations {
 
     fun setNotification(
         APIKEY: String,
-        coin_id: String,
+        coin_id: Int,
         value_type: String,
         final_value: Double,
         via_mail: Boolean
     ) {
         val apiInterface = ApiInterface.create().addNotification(
-            "Token $APIKEY",
+            "Bearer $APIKEY",
             coin_id,
             value_type,
             final_value,
@@ -94,7 +95,7 @@ class NetworkOperations {
 
     fun getNotifications(APIKEY: String): List<Notification> {
         val countDownLatch = CountDownLatch(1)
-        val apiInterface = ApiInterface.create().getNotifications("Token $APIKEY")
+        val apiInterface = ApiInterface.create().getNotifications("Bearer $APIKEY")
         var responseBody: List<Notification> = listOf()
         apiInterface.enqueue(object : Callback<List<Notification>> {
             override fun onResponse(
@@ -132,7 +133,7 @@ class NetworkOperations {
 
     fun getFavorites(APIKEY: String): List<CryptoCoinValueItem> {
         val countDownLatch = CountDownLatch(1)
-        val apiInterface = ApiInterface.create().getFavorites("Token $APIKEY")
+        val apiInterface = ApiInterface.create().getFavorites("Bearer $APIKEY")
         var responseBody: List<CryptoCoinValueItem> = listOf()
         apiInterface.enqueue(object : Callback<List<CryptoCoinValueItem>> {
             override fun onResponse(
@@ -153,8 +154,8 @@ class NetworkOperations {
         return responseBody
     }
 
-    fun removeFavorite(coinID: String, APIKEY: String) {
-        val apiInterface = ApiInterface.create().deleteFavorite("Token $APIKEY", coinID)
+    fun removeFavorite(coinID: Int, APIKEY: String) {
+        val apiInterface = ApiInterface.create().deleteFavorite("Bearer $APIKEY", coinID)
         apiInterface.enqueue(object : Callback<Boolean> {
             override fun onResponse(
                 call: Call<Boolean>?,
@@ -167,8 +168,8 @@ class NetworkOperations {
         })
     }
 
-    fun addFavorite(coinID: String, APIKEY: String) {
-        val apiInterface = ApiInterface.create().addFavorite("Token $APIKEY", coinID)
+    fun addFavorite(coinID: Int, APIKEY: String) {
+        val apiInterface = ApiInterface.create().addFavorite("Bearer $APIKEY", coinID)
         apiInterface.enqueue(object : Callback<Boolean> {
             override fun onResponse(
                 call: Call<Boolean>?,

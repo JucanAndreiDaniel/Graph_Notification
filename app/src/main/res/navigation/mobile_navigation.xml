@@ -59,13 +59,16 @@
         <argument
             android:name="nameList"
             app:argType="string[]" />
+        <argument
+            android:name="coinIDList"
+            app:argType="integer[]" />
     </dialog>
     <dialog
         android:id="@+id/modifyNotificationDialog"
         android:name="com.scfnotification.notifyme.ui.fragments.ModifyNotificationDialog"
         android:label="ModifyNotificationDialog" >
         <argument
-            android:name="coinId"
+            android:name="coinName"
             app:argType="string" />
         <argument
             android:name="value_type"
@@ -73,5 +76,8 @@
         <argument
             android:name="value"
             app:argType="long" />
+        <argument
+            android:name="coinID"
+            app:argType="integer" />
     </dialog>
 </navigation>

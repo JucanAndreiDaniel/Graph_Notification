@@ -8,33 +8,34 @@ import retrofit2.http.*
 
 interface ApiInterface {
 
-    @GET("coins/")
+    @GET("all-coins/")
     fun getCoins(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("currency") currency: String
     ): Call<List<CryptoCoinValueItem>>
 
-    @GET("notification/")
+    @GET("notifications/")
     fun getNotifications(
         @Header("Authorization") token: String
     ): Call<List<Notification>>
 
-    @GET("user/favorite/")
+    @GET("favorites/")
     fun getFavorites(
         @Header("Authorization") token: String
     ): Call<List<CryptoCoinValueItem>>
 
     @FormUrlEncoded
-    @POST("user/favorite")
+    @POST("favorites/")
     fun addFavorite(
         @Header("Authorization") token: String,
-        @Field("crypto_id") crypto_id: String
+        @Field("crypto_id") crypto_id: Int
     ): Call<Boolean>
 
     @FormUrlEncoded
-    @DELETE("user/favorite/")
+    @DELETE("favorites/")
     fun deleteFavorite(
         @Header("Authorization") token: String,
-        @Field("crypto_id") crypto_id: String
+        @Field("crypto_id") crypto_id: Int
     ): Call<Boolean>
 
     @FormUrlEncoded
@@ -54,27 +55,27 @@ interface ApiInterface {
     ): Call<CryptoCoinValueItem>
 
     @FormUrlEncoded
-    @POST("notification/")
+    @POST("notifications/")
     fun addNotification(
         @Header("Authorization") token: String,
-        @Field("crypto_id") coin_id: String,
+        @Field("crypto_id") coin_id: Int,
         @Field("option") value_type: String,
         @Field("value") final_value: Double,
         @Field("viamail") via_mail: Boolean,
     ): Call<Boolean>
 
     @FormUrlEncoded
-    @DELETE("notification/")
+    @DELETE("notifications/")
     fun deleteNotification(
         @Header("Authorization") token: String,
-        @Field("crypto_id") crypto_id: String
+        @Field("crypto_id") crypto_id: Int
     ): Call<Boolean>
 
     @FormUrlEncoded
-    @PATCH("notification/")
+    @PUT("notifications/")
     fun enableNotification(
         @Header("Authorization") token: String,
-        @Field("crypto_id") crypto_id: String,
+        @Field("crypto_id") crypto_id: Int,
         @Field("state") state: Boolean
     ): Call<Boolean>
 
